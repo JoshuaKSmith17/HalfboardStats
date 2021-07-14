@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace HalfboardStats.Model.ObjectRelationalMappers
 {
-    public class Team
+    public class DivisionMapper
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string City { get; set; }
-
+        public string Link { get; set; }
     }
 }
