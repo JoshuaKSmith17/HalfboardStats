@@ -12,16 +12,16 @@ namespace HalfboardStats.Model.Repositories
 {
     public class StandingsRepository
     {
-        Standings Standings;
+        StandingsMapper Standings;
         HttpClient Client;
 
         public StandingsRepository()
         {
-            Standings = new Standings();
+            Standings = new StandingsMapper();
             Client = new HttpClient();
         }
 
-        public async Task<Standings> GetStandings()
+        public async Task<StandingsMapper> GetStandings()
         {
             Client.BaseAddress = new Uri("https://statsapi.web.nhl.com/api/v1/");
             var responseTask = Client.GetAsync("standings");
@@ -29,7 +29,7 @@ namespace HalfboardStats.Model.Repositories
 
             string apiResponse = await responseTask.Result.Content.ReadAsStringAsync();
 
-            Standings = JsonConvert.DeserializeObject<Standings>(apiResponse);
+            Standings = JsonConvert.DeserializeObject<StandingsMapper>(apiResponse);
 
             return Standings;
         }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HalfboardStats.Model.ObjectRelationalMappers
 {
-    public class Conference
+    public class ConferenceMapper
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HalfboardStats.Model.ObjectRelationalMappers
 {
-    public class LeagueRecord
+    public class LeagueRecordMapper
     {
         public int Wins { get; set; }
         public int Losses { get; set; }
