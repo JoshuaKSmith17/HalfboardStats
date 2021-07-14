@@ -6,20 +6,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Model.Repositories;
+
 namespace HalfboardStats.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private Standings Standings;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
 
-        public void OnGet()
+        public async void OnGetAsync()
         {
-
+            StandingsRepository repo = new StandingsRepository();
+            Standings = await repo.GetStandings();
         }
     }
 }
