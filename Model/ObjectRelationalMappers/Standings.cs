@@ -8,5 +8,10 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
     public class Standings
     {
         public List<TeamRecord> TeamRecords { get; set; }
+
+        public Standings()
+        {
+            TeamRecords = new List<TeamRecord>();
+        }
     }
 }
