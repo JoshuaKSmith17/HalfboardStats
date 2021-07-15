@@ -6,15 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using HalfboardStats.Model.JsonMappers;
-using HalfboardStats.Model.Repositories;
+using HalfboardStats.Model.Builders;
+using HalfboardStats.Model.ObjectRelationalMappers;
 
 namespace HalfboardStats.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private StandingsMapper Standings;
+        private Standings Standings;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -23,8 +23,8 @@ namespace HalfboardStats.Pages
 
         public async void OnGetAsync()
         {
-            StandingsRepository repo = new StandingsRepository();
-            Standings = await repo.GetStandings();
+            StandingsBuilder builder = new StandingsBuilder();
+            Standings = await builder.BuildStandings();
         }
     }
 }
