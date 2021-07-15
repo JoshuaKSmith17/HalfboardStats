@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HalfboardStats.Model.ObjectRelationalMappers
+namespace HalfboardStats.Model.JsonMappers
 {
-    public class ConferenceMapper
+    public class LeagueMapper
     {
         public int Id { get; set; }
         public string Name { get; set; }
