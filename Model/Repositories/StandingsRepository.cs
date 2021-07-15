@@ -6,7 +6,7 @@ using System.Net.Http;
 
 using Newtonsoft.Json;
 
-using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Model.JsonMappers;
 
 namespace HalfboardStats.Model.Repositories
 {

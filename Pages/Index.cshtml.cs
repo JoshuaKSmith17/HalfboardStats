@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Model.JsonMappers;
 using HalfboardStats.Model.Repositories;
 
 namespace HalfboardStats.Pages
