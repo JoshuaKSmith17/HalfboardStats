@@ -13,6 +13,11 @@ namespace HalfboardStats.Model.Builders
     {
         public async Task<Standings> BuildStandings()
         {
+            /*
+             * Method that takes the raw data we get from the JSON file and organizes it in a way that is easier for our front end to work with.
+             * Since there is a lot of logic needed to perform the transfer, this logic is separated out from the class it creates.  It also
+             * serves as a way to separate some logic from classes that will serve as the model for our database.
+             */
             Standings standings = new Standings();
             StandingsMapper mapper = new StandingsMapper();
             StandingsRepository repo = new StandingsRepository();
