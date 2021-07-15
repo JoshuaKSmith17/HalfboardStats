@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HalfboardStats.Model.ObjectRelationalMappers
+namespace HalfboardStats.Model.JsonMappers
 {
-    public class Team
+    public class ConferenceMapper
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string City { get; set; }
-
+        public string Link { get; set; }
     }
 }
