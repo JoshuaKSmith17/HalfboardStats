@@ -1,0 +1,42 @@
+﻿@page
+@model HalfboardStats.Pages.StandingsModel
+@{
+    ViewData["Title"] = "Standings";
+}
+
+<div class="container text-white">
+    <h1>Standings</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        @foreach (var team in Model.Standings.TeamRecords)
+        {
+            <tr class="text-white">
+                <td>
+                    @Html.DisplayFor(modelTeam => team.TeamName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Wins)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Losses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.OvertimeLosses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Points)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
