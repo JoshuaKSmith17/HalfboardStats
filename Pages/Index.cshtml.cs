@@ -14,7 +14,7 @@ namespace HalfboardStats.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private Standings Standings;
+        public Dictionary<string, IEnumerable<TeamRecord>> Standings { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {

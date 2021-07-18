@@ -11,7 +11,7 @@ namespace HalfboardStats.Model.Builders
 {
     public class StandingsBuilder
     {
-        public async Task<Standings> BuildStandings()
+        public async Task<Dictionary<string, IEnumerable<TeamRecord>>> BuildStandings()
         {
             /*
              * Method that takes the raw data we get from the JSON file and organizes it in a way that is easier for our front end to work with.
@@ -21,6 +21,8 @@ namespace HalfboardStats.Model.Builders
             Standings standings = new Standings();
             StandingsMapper mapper = new StandingsMapper();
             StandingsRepository repo = new StandingsRepository();
+
+            Dictionary<string, IEnumerable<TeamRecord>> standingsDictionary = new Dictionary<string, IEnumerable<TeamRecord>>();
 
             mapper = await repo.GetStandings();
 
@@ -46,7 +48,16 @@ namespace HalfboardStats.Model.Builders
                 }
             }
 
-            return standings;
+            standingsDictionary.Add("League Standings", standings.TeamRecords);
+
+            IEnumerable<TeamRecord> westDivision =
+                from teamRecord in standings.TeamRecords
+                where teamRecord.Division.Contains("West")
+                select teamRecord;
+
+            standingsDictionary.Add("West Division", westDivision);
+
+            return standingsDictionary;
             
         }
     }

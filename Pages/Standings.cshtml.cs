@@ -12,7 +12,7 @@ namespace HalfboardStats.Pages
 {
     public class StandingsModel : PageModel
     {
-        public Standings Standings { get; set; }
+        public Dictionary<string, IEnumerable<TeamRecord>> Standings { get; set; }
         public async void OnGetAsync()
         {
             StandingsBuilder builder = new StandingsBuilder();
