@@ -55,6 +55,8 @@ namespace HalfboardStats.Model.Builders
                 where teamRecord.Division.Contains("West")
                 select teamRecord;
 
+            westDivision = westDivision.OrderByDescending(team => team.Points);
+
             standingsDictionary.Add("WestDivision", westDivision);
 
             IEnumerable<TeamRecord> northDivision =
@@ -62,21 +64,27 @@ namespace HalfboardStats.Model.Builders
                 where teamRecord.Division.Contains("North")
                 select teamRecord;
 
-            standingsDictionary.Add("NorthDivision", westDivision);
+            northDivision = northDivision.OrderByDescending(team => team.Points);
+
+            standingsDictionary.Add("NorthDivision", northDivision);
 
             IEnumerable<TeamRecord> centralDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("Central")
                 select teamRecord;
 
-            standingsDictionary.Add("CentralDivision", westDivision);
+            centralDivision = centralDivision.OrderByDescending(team => team.Points);
+
+            standingsDictionary.Add("CentralDivision", centralDivision);
 
             IEnumerable<TeamRecord> eastDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("East")
                 select teamRecord;
 
-            standingsDictionary.Add("EastDivision", westDivision);
+            eastDivision = eastDivision.OrderByDescending(team => team.Points);
+
+            standingsDictionary.Add("EastDivision", eastDivision);
 
             return standingsDictionary;
             
