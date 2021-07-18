@@ -8,9 +8,156 @@
     <h1>Standings</h1>
     <table class="table">
         <thead>
-            <tr>
+            <tr class="text-white">
                 <th>
+                    East Division
+                </th>
+                <th>
+                    Wins
+                </th>
+                <th>
+                    Losses
+                </th>
+                <th>
+                    Overtime Losses
+                </th>
+                <th>
+                    Points
+                </th>
+            </tr>
+        </thead>
+        @foreach (var team in Model.Standings["EastDivision"])
+        {
+            <tr class="text-white">
+                <td>
+                    @Html.DisplayFor(modelTeam => team.TeamName)
+                </td>
 
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Wins)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Losses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.OvertimeLosses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Points)
+                </td>
+            </tr>
+        }
+    </table>
+    <table class="table">
+        <thead>
+            <tr class="text-white">
+                <th>
+                    North Division
+                </th>
+                <th>
+                    Wins
+                </th>
+                <th>
+                    Losses
+                </th>
+                <th>
+                    Overtime Losses
+                </th>
+                <th>
+                    Points
+                </th>
+            </tr>
+        </thead>
+        @foreach (var team in Model.Standings["NorthDivision"])
+        {
+            <tr class="text-white">
+                <td>
+                    @Html.DisplayFor(modelTeam => team.TeamName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Wins)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Losses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.OvertimeLosses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Points)
+                </td>
+            </tr>
+        }
+    </table>
+    <table class="table">
+        <thead>
+            <tr class="text-white">
+                <th>
+                    Central Division
+                </th>
+                <th>
+                    Wins
+                </th>
+                <th>
+                    Losses
+                </th>
+                <th>
+                    Overtime Losses
+                </th>
+                <th>
+                    Points
+                </th>
+            </tr>
+        </thead>
+        @foreach (var team in Model.Standings["CentralDivision"])
+        {
+            <tr class="text-white">
+                <td>
+                    @Html.DisplayFor(modelTeam => team.TeamName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Wins)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Losses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.OvertimeLosses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelTeam => team.Points)
+                </td>
+            </tr>
+        }
+    </table>
+    <table class="table">
+        <thead>
+            <tr class="text-white">
+                <th>
+                    West Division
+                </th>
+                <th>
+                    Wins
+                </th>
+                <th>
+                    Losses
+                </th>
+                <th>
+                    Overtime Losses
+                </th>
+                <th>
+                    Points
                 </th>
             </tr>
         </thead>
