@@ -57,32 +57,26 @@ namespace HalfboardStats.Model.Builders
 
             standingsDictionary.Add("WestDivision", westDivision);
 
-            standingsDictionary.Add("LeagueStandings", standings.TeamRecords);
-
             IEnumerable<TeamRecord> northDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("North")
                 select teamRecord;
 
-            standingsDictionary.Add("WestDivision", westDivision);
-
-            standingsDictionary.Add("LeagueStandings", standings.TeamRecords);
+            standingsDictionary.Add("NorthDivision", westDivision);
 
             IEnumerable<TeamRecord> centralDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("Central")
                 select teamRecord;
 
-            standingsDictionary.Add("WestDivision", westDivision);
-
-            standingsDictionary.Add("LeagueStandings", standings.TeamRecords);
+            standingsDictionary.Add("CentralDivision", westDivision);
 
             IEnumerable<TeamRecord> eastDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("East")
                 select teamRecord;
 
-            standingsDictionary.Add("WestDivision", westDivision);
+            standingsDictionary.Add("EastDivision", westDivision);
 
             return standingsDictionary;
             
