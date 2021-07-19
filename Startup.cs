@@ -21,8 +21,11 @@ namespace HalfboardStats
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // services is used as the DI container.  Register using services.AddScoped<IMyDependency, MyDependency>();
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+
             services.AddRazorPages();
         }
 
