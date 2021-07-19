@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 using HalfboardStats.Model.Repositories;
 using HalfboardStats.Model.ObjectRelationalMappers;
 using HalfboardStats.Model.JsonMappers;
@@ -11,6 +12,12 @@ namespace HalfboardStats.Model.Builders
 {
     public class StandingsBuilder
     {
+        IServiceProvider ServiceProvider;
+
+        public StandingsBuilder(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
         public async Task<Dictionary<string, IEnumerable<TeamRecord>>> BuildStandings()
         {
             /*
@@ -20,7 +27,7 @@ namespace HalfboardStats.Model.Builders
              */
             Standings standings = new Standings();
             StandingsMapper mapper = new StandingsMapper();
-            StandingsRepository repo = new StandingsRepository();
+            StandingsRepository repo = new StandingsRepository(ServiceProvider);
 
             Dictionary<string, IEnumerable<TeamRecord>> standingsDictionary = new Dictionary<string, IEnumerable<TeamRecord>>();
 
