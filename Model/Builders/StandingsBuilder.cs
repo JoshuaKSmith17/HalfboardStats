@@ -11,7 +11,7 @@ namespace HalfboardStats.Model.Builders
 {
     public class StandingsBuilder
     {
-        public async Task<Standings> BuildStandings()
+        public async Task<Dictionary<string, IEnumerable<TeamRecord>>> BuildStandings()
         {
             /*
              * Method that takes the raw data we get from the JSON file and organizes it in a way that is easier for our front end to work with.
@@ -21,6 +21,8 @@ namespace HalfboardStats.Model.Builders
             Standings standings = new Standings();
             StandingsMapper mapper = new StandingsMapper();
             StandingsRepository repo = new StandingsRepository();
+
+            Dictionary<string, IEnumerable<TeamRecord>> standingsDictionary = new Dictionary<string, IEnumerable<TeamRecord>>();
 
             mapper = await repo.GetStandings();
 
@@ -46,7 +48,45 @@ namespace HalfboardStats.Model.Builders
                 }
             }
 
-            return standings;
+            standingsDictionary.Add("LeagueStandings", standings.TeamRecords);
+
+            IEnumerable<TeamRecord> westDivision =
+                from teamRecord in standings.TeamRecords
+                where teamRecord.Division.Contains("West")
+                select teamRecord;
+
+            westDivision = westDivision.OrderByDescending(team => team.Points);
+
+            standingsDictionary.Add("WestDivision", westDivision);
+
+            IEnumerable<TeamRecord> northDivision =
+                from teamRecord in standings.TeamRecords
+                where teamRecord.Division.Contains("North")
+                select teamRecord;
+
+            northDivision = northDivision.OrderByDescending(team => team.Points);
+
+            standingsDictionary.Add("NorthDivision", northDivision);
+
+            IEnumerable<TeamRecord> centralDivision =
+                from teamRecord in standings.TeamRecords
+                where teamRecord.Division.Contains("Central")
+                select teamRecord;
+
+            centralDivision = centralDivision.OrderByDescending(team => team.Points);
+
+            standingsDictionary.Add("CentralDivision", centralDivision);
+
+            IEnumerable<TeamRecord> eastDivision =
+                from teamRecord in standings.TeamRecords
+                where teamRecord.Division.Contains("East")
+                select teamRecord;
+
+            eastDivision = eastDivision.OrderByDescending(team => team.Points);
+
+            standingsDictionary.Add("EastDivision", eastDivision);
+
+            return standingsDictionary;
             
         }
     }

@@ -1,26 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using HalfboardStats.Model.Builders;
 using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Model.Builders;
 
 namespace HalfboardStats.Pages
 {
-    public class IndexModel : PageModel
+    public class StandingsModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
         public Dictionary<string, IEnumerable<TeamRecord>> Standings { get; set; }
-
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
-
         public async void OnGetAsync()
         {
             StandingsBuilder builder = new StandingsBuilder();
