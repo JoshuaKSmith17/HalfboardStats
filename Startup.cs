@@ -33,6 +33,7 @@ namespace HalfboardStats
             services.AddScoped<IStandingsMapper, StandingsMapper>();
             services.AddScoped<IStandings, Standings>();
             services.AddScoped<IStandingsRepository, StandingsRepository>();
+            services.AddTransient<ITeamRecord, TeamRecord>();
 
             services.AddRazorPages();
         }
