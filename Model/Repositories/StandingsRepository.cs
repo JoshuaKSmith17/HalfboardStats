@@ -12,19 +12,19 @@ using HalfboardStats.Model.JsonMappers;
 
 namespace HalfboardStats.Model.Repositories
 {
-    public class StandingsRepository
+    public class StandingsRepository : IStandingsRepository
     {
-        StandingsMapper Standings;
+        IStandingsMapper Standings;
         IServiceProvider ServiceProvider { get; }
 
         public StandingsRepository(IServiceProvider serviceProvider)
         {
-            Standings = new StandingsMapper();
+            Standings = (IStandingsMapper)serviceProvider.GetService(typeof(IStandingsMapper));
             ServiceProvider = serviceProvider;
             
         }
 
-        public async Task<StandingsMapper> GetStandings()
+        public async Task<IStandingsMapper> GetStandings()
         {
             var factory = (IHttpClientFactory)ServiceProvider.GetService(typeof(IHttpClientFactory));
 
