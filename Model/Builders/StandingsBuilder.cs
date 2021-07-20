@@ -25,9 +25,9 @@ namespace HalfboardStats.Model.Builders
              * Since there is a lot of logic needed to perform the transfer, this logic is separated out from the class it creates.  It also
              * serves as a way to separate some logic from classes that will serve as the model for our database.
              */
-            Standings standings = new Standings();
-            StandingsMapper mapper = new StandingsMapper();
-            StandingsRepository repo = new StandingsRepository(ServiceProvider);
+            IStandings standings = (IStandings)ServiceProvider.GetService(typeof(IStandings));
+            IStandingsMapper mapper = (IStandingsMapper)ServiceProvider.GetService(typeof(IStandingsMapper));
+            IStandingsRepository repo = (StandingsRepository)ServiceProvider.GetService(typeof(IStandingsRepository));
 
             Dictionary<string, IEnumerable<TeamRecord>> standingsDictionary = new Dictionary<string, IEnumerable<TeamRecord>>();
 
