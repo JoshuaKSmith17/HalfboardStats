@@ -15,7 +15,7 @@ namespace HalfboardStats.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         IServiceProvider ServiceProvider;
-        public Dictionary<string, IEnumerable<TeamRecord>> Standings { get; set; }
+        public IDictionary<string, IEnumerable<ITeamRecord>> Standings { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IServiceProvider serviceProvider)
         {
