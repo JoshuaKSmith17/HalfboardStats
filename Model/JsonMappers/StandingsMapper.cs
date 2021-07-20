@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HalfboardStats.Model.JsonMappers
 {
-    public class StandingsMapper
+    public class StandingsMapper : IStandingsMapper
     {
         public string Copyright { get; set; }
         public List<DivisionStandingsMapper> Records { get; set; }
