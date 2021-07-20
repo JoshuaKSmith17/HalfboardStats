@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using HalfboardStats.Model.JsonMappers;
+using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Model.Repositories;
+
 namespace HalfboardStats
 {
     public class Startup
@@ -25,6 +29,10 @@ namespace HalfboardStats
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
+
+            services.AddScoped<IStandingsMapper, StandingsMapper>();
+            services.AddScoped<IStandings, Standings>();
+            services.AddScoped<IStandingsRepository, StandingsRepository>();
 
             services.AddRazorPages();
         }
