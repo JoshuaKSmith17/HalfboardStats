@@ -18,7 +18,7 @@ namespace HalfboardStats.Model.Builders
         {
             ServiceProvider = serviceProvider;
         }
-        public async Task<Dictionary<string, IEnumerable<TeamRecord>>> BuildStandings()
+        public async Task<IDictionary<string, IEnumerable<ITeamRecord>>> BuildStandings()
         {
             /*
              * Method that takes the raw data we get from the JSON file and organizes it in a way that is easier for our front end to work with.
@@ -29,7 +29,7 @@ namespace HalfboardStats.Model.Builders
             IStandingsMapper mapper = (IStandingsMapper)ServiceProvider.GetService(typeof(IStandingsMapper));
             IStandingsRepository repo = (StandingsRepository)ServiceProvider.GetService(typeof(IStandingsRepository));
 
-            Dictionary<string, IEnumerable<TeamRecord>> standingsDictionary = new Dictionary<string, IEnumerable<TeamRecord>>();
+            var standingsDictionary = new Dictionary<string, IEnumerable<ITeamRecord>>();
 
             mapper = await repo.GetStandings();
 
@@ -37,7 +37,7 @@ namespace HalfboardStats.Model.Builders
             {
                 for (int j = 0; j < mapper.Records[i].TeamRecords.Count; j++)
                 {
-                    TeamRecord record = new TeamRecord();
+                    ITeamRecord record = (ITeamRecord)ServiceProvider.GetService(typeof(ITeamRecord));
                     record.Id = mapper.Records[i].TeamRecords[j].Team.Id;
                     record.TeamName = mapper.Records[i].TeamRecords[j].Team.Name;
                     record.Conference = mapper.Records[i].Conference.Name;
@@ -58,7 +58,7 @@ namespace HalfboardStats.Model.Builders
 
             standingsDictionary.Add("LeagueStandings", standings.TeamRecords);
 
-            IEnumerable<TeamRecord> westDivision =
+            IEnumerable<ITeamRecord> westDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("West")
                 select teamRecord;
@@ -67,7 +67,7 @@ namespace HalfboardStats.Model.Builders
 
             standingsDictionary.Add("WestDivision", westDivision);
 
-            IEnumerable<TeamRecord> northDivision =
+            IEnumerable<ITeamRecord> northDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("North")
                 select teamRecord;
@@ -76,7 +76,7 @@ namespace HalfboardStats.Model.Builders
 
             standingsDictionary.Add("NorthDivision", northDivision);
 
-            IEnumerable<TeamRecord> centralDivision =
+            IEnumerable<ITeamRecord> centralDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("Central")
                 select teamRecord;
@@ -85,7 +85,7 @@ namespace HalfboardStats.Model.Builders
 
             standingsDictionary.Add("CentralDivision", centralDivision);
 
-            IEnumerable<TeamRecord> eastDivision =
+            IEnumerable<ITeamRecord> eastDivision =
                 from teamRecord in standings.TeamRecords
                 where teamRecord.Division.Contains("East")
                 select teamRecord;
