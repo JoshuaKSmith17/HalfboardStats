@@ -8,6 +8,6 @@ namespace HalfboardStats.Model.JsonMappers
     public class TeamRosterMapper
     {
         public string Copyright { get; set; }
-        public List<PlayerMapper> Roster { get; set; }
+        public List<RosterPersonMapper> Roster { get; set; }
     }
 }
