@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using HalfboardStats.Model.JsonMappers;
+using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Model.Repositories;
+
 namespace HalfboardStats
 {
     public class Startup
@@ -21,8 +25,16 @@ namespace HalfboardStats
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // services is used as the DI container.  Register using services.AddScoped<IMyDependency, MyDependency>();
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+
+            services.AddScoped<IStandingsMapper, StandingsMapper>();
+            services.AddScoped<IStandings, Standings>();
+            services.AddScoped<IStandingsRepository, StandingsRepository>();
+            services.AddTransient<ITeamRecord, TeamRecord>();
+
             services.AddRazorPages();
         }
 

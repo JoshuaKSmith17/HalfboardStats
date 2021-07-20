@@ -12,10 +12,17 @@ namespace HalfboardStats.Pages
 {
     public class StandingsModel : PageModel
     {
-        public Dictionary<string, IEnumerable<TeamRecord>> Standings { get; set; }
+        public IDictionary<string, IEnumerable<ITeamRecord>> Standings { get; set; }
+
+        IServiceProvider ServiceProvider;
+
+        public StandingsModel(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
         public async void OnGetAsync()
         {
-            StandingsBuilder builder = new StandingsBuilder();
+            StandingsBuilder builder = new StandingsBuilder(ServiceProvider);
             Standings = await builder.BuildStandings();
         }
     }
