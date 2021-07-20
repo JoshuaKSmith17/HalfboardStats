@@ -7,11 +7,11 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
 {
     public class Standings : IStandings
     {
-        public List<TeamRecord> TeamRecords { get; set; }
+        public IList<ITeamRecord> TeamRecords { get; set; }
 
         public Standings()
         {
-            TeamRecords = new List<TeamRecord>();
+            TeamRecords = new List<ITeamRecord>();
         }
     }
 }
