@@ -7,6 +7,6 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
 {
     public interface IStandings
     {
-        public List<TeamRecord> TeamRecords { get; set; }
+        public IList<ITeamRecord> TeamRecords { get; set; }
     }
 }
