@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HalfboardStats.Model.ObjectRelationalMappers
 {
-    public class TeamRecord : ITeamRecord
+    public interface ITeamRecord
     {
         public int Id { get; set; }
         public string TeamName { get; set; }
@@ -16,6 +16,5 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
         public int OvertimeLosses { get; set; }
         public int Points { get; set; }
         public double PointsPercentage { get; set; }
-
     }
 }
