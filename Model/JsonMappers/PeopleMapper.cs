@@ -22,7 +22,7 @@ namespace HalfboardStats.Model.JsonMappers
         public string BirthCountry { get; set; }
         public string Nationality { get; set; }
 
-        // Height comes in as a string with a character break.  We need to ensure this data is captured properly.
+        // TODO Height comes in as a string with a character break.  We need to ensure this data is captured properly.
         public string Height { get; set; }
         public int Weight { get; set; }
         public bool Active { get; set; }
