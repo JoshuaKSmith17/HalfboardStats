@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using HalfboardStats.Model.JsonMappers;
 using HalfboardStats.Model.ObjectRelationalMappers;
 using HalfboardStats.Model.Repositories;
+using HalfboardStats.Model.Builders;
 
 namespace HalfboardStats
 {
@@ -34,6 +35,8 @@ namespace HalfboardStats
             services.AddScoped<IStandings, Standings>();
             services.AddScoped<IStandingsRepository, StandingsRepository>();
             services.AddTransient<ITeamRecord, TeamRecord>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IPlayerbaseBuilder, PlayerbaseBuilder>();
 
             services.AddRazorPages();
         }
