@@ -27,7 +27,7 @@ namespace HalfboardStats.Model.Builders
              */
             IStandings standings = (IStandings)ServiceProvider.GetService(typeof(IStandings));
             IStandingsMapper mapper = (IStandingsMapper)ServiceProvider.GetService(typeof(IStandingsMapper));
-            IStandingsRepository repo = (StandingsRepository)ServiceProvider.GetService(typeof(IStandingsRepository));
+            IStandingsRepository repo = (IStandingsRepository)ServiceProvider.GetService(typeof(IStandingsRepository));
 
             var standingsDictionary = new Dictionary<string, IEnumerable<ITeamRecord>>();
 
