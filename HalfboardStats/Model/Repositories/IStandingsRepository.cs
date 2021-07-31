@@ -7,7 +7,7 @@ using HalfboardStats.Model.JsonMappers;
 
 namespace HalfboardStats.Model.Repositories
 {
-    interface IStandingsRepository
+    public interface IStandingsRepository
     {
         public Task<IStandingsMapper> GetStandings();
     }
