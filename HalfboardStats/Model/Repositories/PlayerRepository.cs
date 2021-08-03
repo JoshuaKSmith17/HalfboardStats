@@ -33,17 +33,38 @@ namespace HalfboardStats.Model.Repositories
 
             league = JsonConvert.DeserializeObject<LeagueTeamsMapper>(apiResponse);
 
+
+            string leagueTeamString = "teams?teamId=";
+
             for (int i = 0; i < league.Teams.Count; i++)
             {
-                responseTask = client.GetAsync("teams/" + league.Teams[i].Id + "/roster");
-                responseTask.Wait();
-                string apiRosterResponse = await responseTask.Result.Content.ReadAsStringAsync();
-                var teamRoster = new TeamRosterMapper();
-                teamRoster = JsonConvert.DeserializeObject<TeamRosterMapper>(apiRosterResponse);
-
-                for (int j = 0; j < teamRoster.Roster.Count; j++)
+                if (i == league.Teams.Count - 1)
                 {
-                    people.Add(teamRoster.Roster[j]);
+                    leagueTeamString += league.Teams[i].Id;
+                }
+                else
+                {
+                    leagueTeamString += league.Teams[i].Id + ",";
+                }
+            }
+
+            leagueTeamString += "&expand=team.roster";
+
+            responseTask = client.GetAsync(leagueTeamString);
+            responseTask.Wait();
+            apiResponse = await responseTask.Result.Content.ReadAsStringAsync();
+
+            var leagueRosterMapper = new LeagueRosterMapper();
+
+            leagueRosterMapper = JsonConvert.DeserializeObject<LeagueRosterMapper>(apiResponse);
+
+            for (int i = 0; i < leagueRosterMapper.Teams.Count; i++)
+            {
+
+
+                foreach (var player in leagueRosterMapper.Teams[i].Roster.Roster)
+                {
+                    people.Add(player);
                 }
 
             }
