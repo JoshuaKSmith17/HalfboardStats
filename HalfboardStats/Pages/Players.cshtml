@@ -16,6 +16,9 @@
                 <th>
                     Last Name
                 </th>
+                <th>
+                    Team
+                </th>
             </tr>
         </thead>
         @foreach (var player in Model.Players)
@@ -32,6 +35,10 @@
                 <td>
                     @Html.DisplayFor(modelPlayer => player.LastName)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.CurrentTeam.TeamName)
+                </td>
             </tr>
         }
     </table>
+    </div>

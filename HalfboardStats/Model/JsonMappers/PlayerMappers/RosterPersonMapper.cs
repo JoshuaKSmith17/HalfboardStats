@@ -16,5 +16,7 @@ namespace HalfboardStats.Model.JsonMappers
         public PersonMapper Person { get; set; }
         public int JerseyNumber { get; set; }
         public PositionMapper Position { get; set; }
+
+
     }
 }

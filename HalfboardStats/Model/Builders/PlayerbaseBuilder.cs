@@ -34,6 +34,11 @@ namespace HalfboardStats.Model.Builders
                 person.FirstName = names.First();
                 person.LastName = names.Last();
 
+                person.CurrentTeam = new Team();
+
+                person.CurrentTeam.Id = playerMapper[i].Person.currentTeam.Id;
+                person.CurrentTeam.TeamName = playerMapper[i].Person.currentTeam.Name;
+
                 players.Add(person);
 
             }
