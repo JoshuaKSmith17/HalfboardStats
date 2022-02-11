@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HalfboardStats.Model.ObjectRelationalMappers
 {
@@ -12,6 +13,7 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
          * player data from.  Another difference is that season statistics for a player will have a relation in this class.
          */
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PlayerId { get; set; }
         public int TeamId { get; set; }
         public string FirstName { get; set; }
