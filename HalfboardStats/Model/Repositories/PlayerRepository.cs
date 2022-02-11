@@ -48,7 +48,7 @@ namespace HalfboardStats.Model.Repositories
                 }
             }
 
-            leagueTeamString += "&expand=team.roster";
+            leagueTeamString += "&expand=team.roster&expand=roster.person";
 
             responseTask = client.GetAsync(leagueTeamString);
             responseTask.Wait();
@@ -64,6 +64,7 @@ namespace HalfboardStats.Model.Repositories
 
                 foreach (var player in leagueRosterMapper.Teams[i].Roster.Roster)
                 {
+                    
                     people.Add(player);
                 }
 
