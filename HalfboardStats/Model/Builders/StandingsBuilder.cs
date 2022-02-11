@@ -38,7 +38,7 @@ namespace HalfboardStats.Model.Builders
                 for (int j = 0; j < mapper.Records[i].TeamRecords.Count; j++)
                 {
                     ITeamRecord record = (ITeamRecord)ServiceProvider.GetService(typeof(ITeamRecord));
-                    record.Id = mapper.Records[i].TeamRecords[j].Team.Id;
+                    record.TeamRecordId = mapper.Records[i].TeamRecords[j].Team.Id;
                     record.TeamName = mapper.Records[i].TeamRecords[j].Team.Name;
                     record.Conference = mapper.Records[i].Conference.Name;
                     record.Division = mapper.Records[i].Division.Name;

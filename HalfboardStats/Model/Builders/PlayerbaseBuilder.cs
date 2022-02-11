@@ -27,17 +27,13 @@ namespace HalfboardStats.Model.Builders
             for (int i = 0; i < playerMapper.Count; i++)
             {
                 var person = new Player();
-                person.Id = playerMapper[i].Person.Id;
+                person.PlayerId = playerMapper[i].Person.Id;
 
                 string[] names = playerMapper[i].Person.FullName.Split(' ');
 
                 person.FirstName = names.First();
                 person.LastName = names.Last();
-
-                person.CurrentTeam = new Team();
-
-                person.CurrentTeam.Id = playerMapper[i].Person.currentTeam.Id;
-                person.CurrentTeam.TeamName = playerMapper[i].Person.currentTeam.Name;
+                person.TeamId = playerMapper[i].Person.currentTeam.Id;
 
                 players.Add(person);
 

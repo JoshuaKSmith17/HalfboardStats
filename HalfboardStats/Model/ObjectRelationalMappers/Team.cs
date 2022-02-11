@@ -7,7 +7,7 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
 {
     public class Team
     {
-        public int Id { get; set; }
+        public int TeamId { get; set; }
         public string Name { get; set; }
         public string Link { get; set; }
         public string Abbreviation { get; set; }

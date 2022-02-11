@@ -25,7 +25,7 @@
         {
             <tr class="text-white">
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.Id)
+                    @Html.DisplayFor(modelPlayer => player.PlayerId)
                 </td>
 
                 <td>
@@ -36,7 +36,7 @@
                     @Html.DisplayFor(modelPlayer => player.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.CurrentTeam.TeamName)
+                    @Html.DisplayFor(modelPlayer => player.TeamId)
                 </td>
             </tr>
         }

@@ -12,7 +12,8 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
          * player data from.  Another difference is that season statistics for a player will have a relation in this class.
          */
 
-        public int Id { get; set; }
+        public int PlayerId { get; set; }
+        public int TeamId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PrimaryNumber { get; set; }
@@ -30,7 +31,6 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
         public bool IsRookie { get; set; }
         public string ShootsCatches { get; set; }
         public string RosterStatus { get; set; }
-        public Team CurrentTeam { get; set; }
         public Position PlayingPosition { get; set; }
         public List<PlayerSeason> PlayerSeasons { get; set; }
     }

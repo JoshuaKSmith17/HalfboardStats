@@ -7,8 +7,8 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
 {
     public class PlayerSeason
     {
-        public int Id { get; set; }
-        public Player Player { get; set; }
+        public int PlayerSeasonId { get; set; }
+        public int PlayerId { get; set; }
         public int MyProperty { get; set; }
         public string Season { get; set; }
 
