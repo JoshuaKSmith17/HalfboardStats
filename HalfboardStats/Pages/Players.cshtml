@@ -19,6 +19,18 @@
                 <th>
                     Team
                 </th>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Birth Date
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    City of Birth
+                </th>
             </tr>
         </thead>
         @foreach (var player in Model.Players)
@@ -37,6 +49,18 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelPlayer => player.TeamId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.PrimaryNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.CurrentAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.BirthCity)
                 </td>
             </tr>
         }

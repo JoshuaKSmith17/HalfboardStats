@@ -13,18 +13,23 @@ namespace HalfboardStats.Pages
     public class PlayersModel : PageModel
     {
         IServiceProvider ServiceProvider;
+        HalfboardContext Context;
         public List<Player> Players { get; set; }
 
-        public PlayersModel(IServiceProvider serviceProvider)
+        public PlayersModel(IServiceProvider serviceProvider, HalfboardContext context)
         {
             ServiceProvider = serviceProvider;
+            Context = context;
         }
 
 
-        public async void OnGetAsync()
+        public void OnGet()
         {
-            var builder = (IPlayerbaseBuilder)ServiceProvider.GetService(typeof(IPlayerbaseBuilder));
-            Players = await builder.BuildPlayers();
+            IQueryable<Player> playersIQ = from p in Context.Players
+                                           select p;
+
+            Players = new List<Player>(playersIQ);
+
         }
     }
 }
