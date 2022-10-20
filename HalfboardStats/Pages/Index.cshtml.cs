@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using HalfboardStats.Model.Builders;
 using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Model.LocalRepositories;
 
 namespace HalfboardStats.Pages
 {
@@ -15,18 +16,25 @@ namespace HalfboardStats.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         IServiceProvider ServiceProvider;
+        HalfboardContext Context;
         public IDictionary<string, IEnumerable<ITeamRecord>> Standings { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, IServiceProvider serviceProvider)
+        public IndexModel(ILogger<IndexModel> logger, IServiceProvider serviceProvider, HalfboardContext context)
         {
             _logger = logger;
             ServiceProvider = serviceProvider;
+            Context = context;
         }
 
         public async void OnGetAsync()
         {
             StandingsBuilder builder = new StandingsBuilder(ServiceProvider);
-            Standings = await builder.BuildStandings();
+            Standings = await builder.BuildStandings();        }
+
+        public void OnPost()
+        {
+            var repo = (IActivePlayerLocalRepository)ServiceProvider.GetService(typeof(IActivePlayerLocalRepository));
+            repo.CreateActivePlayers(Context);
         }
     }
 }
