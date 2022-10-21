@@ -19,13 +19,25 @@
                 <th>
                     Team
                 </th>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Birth Date
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    City of Birth
+                </th>
             </tr>
         </thead>
         @foreach (var player in Model.Players)
         {
             <tr class="text-white">
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.Id)
+                    @Html.DisplayFor(modelPlayer => player.PlayerId)
                 </td>
 
                 <td>
@@ -36,7 +48,19 @@
                     @Html.DisplayFor(modelPlayer => player.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.CurrentTeam.TeamName)
+                    @Html.DisplayFor(modelPlayer => player.TeamId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.PrimaryNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.CurrentAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelPlayer => player.BirthCity)
                 </td>
             </tr>
         }

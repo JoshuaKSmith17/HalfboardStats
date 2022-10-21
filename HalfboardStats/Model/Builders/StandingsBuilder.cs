@@ -38,7 +38,7 @@ namespace HalfboardStats.Model.Builders
                 for (int j = 0; j < mapper.Records[i].TeamRecords.Count; j++)
                 {
                     ITeamRecord record = (ITeamRecord)ServiceProvider.GetService(typeof(ITeamRecord));
-                    record.Id = mapper.Records[i].TeamRecords[j].Team.Id;
+                    record.TeamRecordId = mapper.Records[i].TeamRecords[j].Team.Id;
                     record.TeamName = mapper.Records[i].TeamRecords[j].Team.Name;
                     record.Conference = mapper.Records[i].Conference.Name;
                     record.Division = mapper.Records[i].Division.Name;
@@ -60,21 +60,21 @@ namespace HalfboardStats.Model.Builders
 
             IEnumerable<ITeamRecord> westDivision =
                 from teamRecord in standings.TeamRecords
-                where teamRecord.Division.Contains("West")
+                where teamRecord.Division.Contains("Metropolitan")
                 select teamRecord;
 
             westDivision = westDivision.OrderByDescending(team => team.Points);
 
-            standingsDictionary.Add("WestDivision", westDivision);
+            standingsDictionary.Add("Metropolitan", westDivision);
 
             IEnumerable<ITeamRecord> northDivision =
                 from teamRecord in standings.TeamRecords
-                where teamRecord.Division.Contains("North")
+                where teamRecord.Division.Contains("Atlantic")
                 select teamRecord;
 
             northDivision = northDivision.OrderByDescending(team => team.Points);
 
-            standingsDictionary.Add("NorthDivision", northDivision);
+            standingsDictionary.Add("Atlantic", northDivision);
 
             IEnumerable<ITeamRecord> centralDivision =
                 from teamRecord in standings.TeamRecords
@@ -87,12 +87,12 @@ namespace HalfboardStats.Model.Builders
 
             IEnumerable<ITeamRecord> eastDivision =
                 from teamRecord in standings.TeamRecords
-                where teamRecord.Division.Contains("East")
+                where teamRecord.Division.Contains("Pacific")
                 select teamRecord;
 
             eastDivision = eastDivision.OrderByDescending(team => team.Points);
 
-            standingsDictionary.Add("EastDivision", eastDivision);
+            standingsDictionary.Add("Pacific", eastDivision);
 
             return standingsDictionary;
             

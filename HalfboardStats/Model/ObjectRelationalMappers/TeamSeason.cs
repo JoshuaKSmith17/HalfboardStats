@@ -13,9 +13,9 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
          * This class should eventually make our Standings classes unneccessary.  We may choose to keep Standings for efficient
          * use of the smaller data set.
          */
-        public int Id { get; set; }
-        public int Year { get; set; }
-        public Team Team { get; set; }
+        public int TeamSeasonId { get; set; }
+        public int TeamId { get; set; }
+        public int Year { get; set; }        
 
     }
 }

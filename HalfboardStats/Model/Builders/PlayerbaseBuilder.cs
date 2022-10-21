@@ -27,17 +27,45 @@ namespace HalfboardStats.Model.Builders
             for (int i = 0; i < playerMapper.Count; i++)
             {
                 var person = new Player();
-                person.Id = playerMapper[i].Person.Id;
+                person.PlayerId = playerMapper[i].Person.Id;
 
                 string[] names = playerMapper[i].Person.FullName.Split(' ');
-
                 person.FirstName = names.First();
                 person.LastName = names.Last();
 
-                person.CurrentTeam = new Team();
+                person.TeamId = playerMapper[i].Person.currentTeam.Id;
+                person.PrimaryNumber = playerMapper[i].JerseyNumber.ToString();
+                person.BirthDate = playerMapper[i].Person.birthDate;
+                person.CurrentAge = playerMapper[i].Person.currentAge;
+                person.BirthCity = playerMapper[i].Person.birthCity;
+                person.BirthStateProvince = playerMapper[i].Person.birthStateProvince;
+                person.BirthCountry = playerMapper[i].Person.birthCountry;
+                person.Nationality = playerMapper[i].Person.nationality;
+                person.Height = playerMapper[i].Person.height;
+                person.Weight = playerMapper[i].Person.weight;
+                person.IsActive = playerMapper[i].Person.active;
+                person.IsAlternateCaptain = playerMapper[i].Person.alternateCaptain;
+                person.IsCaptain = playerMapper[i].Person.captain;
+                person.IsRookie = playerMapper[i].Person.rookie;
+                person.ShootsCatches = playerMapper[i].Person.shootsCatches;
+                person.RosterStatus = playerMapper[i].Person.rosterStatus;
 
-                person.CurrentTeam.Id = playerMapper[i].Person.currentTeam.Id;
-                person.CurrentTeam.TeamName = playerMapper[i].Person.currentTeam.Name;
+                if (playerMapper[i].Position.Name == "Defensman")
+                {
+                    person.PlayingPosition = Position.Defenseman;
+                } 
+                else if (playerMapper[i].Position.Name == "Forward")
+                {
+                    person.PlayingPosition = Position.Forward;
+                } 
+                else if (playerMapper[i].Position.Name == "Center")
+                {
+                    person.PlayingPosition = Position.Center;
+                }
+                else if (playerMapper[i].Position.Name == "Goalie")
+                {
+                    person.PlayingPosition = Position.Goalie;
+                }
 
                 players.Add(person);
 

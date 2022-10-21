@@ -7,13 +7,11 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
 {
     public class PlayerSeason
     {
-        public int Id { get; set; }
-        public Player Player { get; set; }
-        public int MyProperty { get; set; }
-        public string Season { get; set; }
-
+        public int PlayerSeasonId { get; set; }
+        public int PlayerId { get; set; }
         // TODO Not sure how we will obtain the team the player was on just yet.
-        public Team Team { get; set; }
+        public int TeamId { get; set; }
+        public string Season { get; set; }
         public SeasonType SeasonSplit { get; set; }
         public string TimeOnIce { get; set; }
         public int Assists { get; set; }
