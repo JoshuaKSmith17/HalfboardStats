@@ -22,6 +22,7 @@ namespace HalfboardStats.Model.Repositories
         {
             List<RosterPersonMapper> people = new List<RosterPersonMapper>();
 
+            //TODO: This section up to the assigning of leagueTeamStream should get refactored to use the local team db.
             var factory = (IHttpClientFactory)ServiceProvider.GetService(typeof(IHttpClientFactory));
             var client = factory.CreateClient();
             client.BaseAddress = new Uri("https://statsapi.web.nhl.com/api/v1/");
