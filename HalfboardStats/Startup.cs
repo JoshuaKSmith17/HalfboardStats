@@ -40,6 +40,9 @@ namespace HalfboardStats
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IPlayerbaseBuilder, PlayerbaseBuilder>();
             services.AddScoped<IActivePlayerLocalRepository, ActivePlayerLocalRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<ITeamBuilder, TeamBuilder>();
+            services.AddScoped<ITeamLocalRepository, TeamLocalRepository>();
 
             services.AddRazorPages();
 
