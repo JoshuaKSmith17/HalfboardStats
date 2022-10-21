@@ -35,6 +35,9 @@ namespace HalfboardStats.Pages
         {
             var repo = (IActivePlayerLocalRepository)ServiceProvider.GetService(typeof(IActivePlayerLocalRepository));
             repo.CreateActivePlayers(Context);
+
+            var teamRepo = (ITeamLocalRepository)ServiceProvider.GetService(typeof(ITeamLocalRepository));
+            teamRepo.CreateTeams(Context);
         }
     }
 }
