@@ -16,6 +16,7 @@ namespace HalfboardStats.Model.ObjectRelationalMappers
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PlayerId { get; set; }
         public int TeamId { get; set; }
+        public virtual Team CurrentTeam { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PrimaryNumber { get; set; }
