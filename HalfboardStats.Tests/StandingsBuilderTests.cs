@@ -43,9 +43,9 @@ namespace HalfboardStats.Tests
             var standings = await _builder.BuildStandings();
             
 
-            foreach (var team in standings["WestDivision"])
+            foreach (var team in standings["Metropolitan"])
             {
-                _teamId = team.Id;
+                _teamId = team.TeamRecordId;
             }
 
             var result = _teamId == 1;

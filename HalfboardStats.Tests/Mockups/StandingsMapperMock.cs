@@ -30,7 +30,7 @@ namespace HalfboardStats.Tests.Mockups
 
             teamRecords.LeagueRecord = leagueRecordMapper;
             divisionStandingsMapper.Division = new DivisionMapper();
-            divisionStandingsMapper.Division.Name = "West";
+            divisionStandingsMapper.Division.Name = "Metropolitan";
 
             divisionStandingsMapper.Conference = new ConferenceMapper();
             divisionStandingsMapper.Conference.Name = "Western";
