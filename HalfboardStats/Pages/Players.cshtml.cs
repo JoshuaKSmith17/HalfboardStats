@@ -26,19 +26,24 @@ namespace HalfboardStats.Pages
         public void OnGet()
         {
             IQueryable<Player> playersIQ = from p in Context.Players
-                                           select p;
-
-            IEnumerable<Team> teamsIQ = from t in Context.Teams
-                                       select t;
-
-            var teamList = teamsIQ.ToList();
-
-            foreach(var player in playersIQ)
-            {
-                player.CurrentTeam = teamList.Where(t => t.TeamId == player.TeamId).FirstOrDefault();
-            }
+                                           where p.IsActive == true
+                                           join t in Context.Teams on p.TeamId equals t.TeamId
+                                           select new Player
+                                           {
+                                               PlayerId = p.PlayerId,
+                                               FirstName = p.FirstName,
+                                               LastName = p.LastName,
+                                               TeamId = p.TeamId,
+                                               CurrentTeam = t,
+                                               PrimaryNumber = p.PrimaryNumber,
+                                               BirthDate = p.BirthDate,
+                                               CurrentAge = p.CurrentAge,
+                                               BirthCity = p.BirthCity
+                                           };
 
             Players = new List<Player>(playersIQ);
+
+            Players.Sort((playerOne, playerTwo) => playerOne.LastName.CompareTo(playerTwo.LastName));
 
         }
     }
