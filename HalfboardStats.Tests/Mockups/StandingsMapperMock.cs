@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using HalfboardStats.Model.JsonMappers;
+using HalfboardStats.Core.JsonMappers.StandingsMappers;
 
 namespace HalfboardStats.Tests.Mockups
 {
