@@ -1,4 +1,4 @@
-using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Core.ObjectRelationalMappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

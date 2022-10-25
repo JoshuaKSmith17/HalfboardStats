@@ -9,12 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using HalfboardStats.Model.JsonMappers;
-using HalfboardStats.Model.ObjectRelationalMappers;
-using HalfboardStats.Model.Repositories;
-using HalfboardStats.Model.Builders;
-using HalfboardStats.Model.LocalRepositories;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
+using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Core.JsonMappers.StandingsMappers;
+using HalfboardStats.Core.Builders;
+using HalfboardStats.Infrastructure.ServiceAgents;
+using HalfboardStats.Infrastructure.Repositories;
 
 namespace HalfboardStats
 {
@@ -45,6 +45,9 @@ namespace HalfboardStats
             services.AddScoped<ITeamLocalRepository, TeamLocalRepository>();
 
             services.AddRazorPages();
+            services.AddMvc().AddRazorPagesOptions(opt => {
+                opt.RootDirectory = "/Presentation/Pages" ; 
+                });
 
             services.AddDbContext<HalfboardContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HalfboardContext")));
