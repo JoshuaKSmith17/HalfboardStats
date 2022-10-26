@@ -9,5 +9,7 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
     interface IPlayerRepository
     {
         public Task<List<RosterPersonMapper>> GetActivePlayers();
+
+        public Task<List<RosterPersonMapper>> GetAllPlayersAsync(string rosterYear);
     }
 }
