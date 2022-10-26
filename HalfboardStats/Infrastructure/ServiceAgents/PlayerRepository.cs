@@ -73,5 +73,49 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
 
             return people;
         }
+
+        public async Task<List<RosterPersonMapper>> GetAllPlayersAsync(string rosterYear)
+        {
+            //Will not need to build teams.  Removing ?Team.Id from the endpoint will automatically return only the active teams for that given year.
+            //Endpoint like this will give rosters for all active teams that season.
+            //https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster&expand=roster.person&expand=team.roster&season=19881989
+            //Iterate backwards over the years until the API returns an error code.  Should be message number 10 "object not found"
+            List<RosterPersonMapper> people = new List<RosterPersonMapper>();
+
+            var factory = (IHttpClientFactory)ServiceProvider.GetService(typeof(IHttpClientFactory));
+            var client = factory.CreateClient();
+            //client.BaseAddress = new Uri("https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster&expand=roster.person&expand=team.roster&season=");
+
+            string address = "https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster&expand=roster.person&expand=team.roster&season=" + rosterYear;
+
+            //TODO pull DateTime operations out into the Adapter class
+
+            var responseTask = client.GetAsync(address);
+            responseTask.Wait();
+
+            string apiResponse = await responseTask.Result.Content.ReadAsStringAsync();
+            var leagueRosterMapper = new LeagueRosterMapper();
+
+            leagueRosterMapper = JsonConvert.DeserializeObject<LeagueRosterMapper>(apiResponse);
+
+
+                foreach (var team in leagueRosterMapper.Teams)
+                {
+                    if (team.Roster != null)
+                    {
+                        foreach (var player in team.Roster.Roster)
+                        {
+                            people.Add(player);
+                        }
+                    }
+
+                }
+
+            return people;
+
+
+
+
+        }
     }
 }
