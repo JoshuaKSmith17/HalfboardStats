@@ -35,7 +35,7 @@ namespace HalfboardStats.Presentation.Pages
         public void OnPost()
         {
             var repo = (IActivePlayerLocalRepository)ServiceProvider.GetService(typeof(IActivePlayerLocalRepository));
-            repo.CreateActivePlayers(Context);
+            repo.CreateAllPlayersAsync(Context);
 
             var teamRepo = (ITeamLocalRepository)ServiceProvider.GetService(typeof(ITeamLocalRepository));
             teamRepo.CreateTeams(Context);
