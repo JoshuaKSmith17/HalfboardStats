@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using HalfboardStats.Model.JsonMappers;
+using HalfboardStats.Core.JsonMappers.StandingsMappers;
 
 namespace HalfboardStats.Tests.Mockups
 {
@@ -30,7 +29,7 @@ namespace HalfboardStats.Tests.Mockups
 
             teamRecords.LeagueRecord = leagueRecordMapper;
             divisionStandingsMapper.Division = new DivisionMapper();
-            divisionStandingsMapper.Division.Name = "West";
+            divisionStandingsMapper.Division.Name = "Metropolitan";
 
             divisionStandingsMapper.Conference = new ConferenceMapper();
             divisionStandingsMapper.Conference.Name = "Western";

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using NUnit.Framework;
-
-using HalfboardStats.Model.JsonMappers;
-using HalfboardStats.Model.Repositories;
-using HalfboardStats.Model.Builders;
 using HalfboardStats.Tests.Mockups;
-using HalfboardStats.Model.ObjectRelationalMappers;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
+using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Core.JsonMappers.StandingsMappers;
+using HalfboardStats.Core.Builders;
+using HalfboardStats.Infrastructure.ServiceAgents;
 
 namespace HalfboardStats.Tests
 {
@@ -43,9 +43,9 @@ namespace HalfboardStats.Tests
             var standings = await _builder.BuildStandings();
             
 
-            foreach (var team in standings["WestDivision"])
+            foreach (var team in standings["Metropolitan"])
             {
-                _teamId = team.Id;
+                _teamId = team.TeamRecordId;
             }
 
             var result = _teamId == 1;
