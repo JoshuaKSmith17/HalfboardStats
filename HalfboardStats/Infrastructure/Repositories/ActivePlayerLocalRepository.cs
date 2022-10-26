@@ -37,5 +37,90 @@ namespace HalfboardStats.Infrastructure.Repositories
             }
             context.SaveChanges();
         }
+
+        public async void CreateAllPlayersAsync(HalfboardContext context)
+        {
+            var builder = (IPlayerbaseBuilder)ServiceProvider.GetService(typeof(IPlayerbaseBuilder));
+            
+            string rosterYear;
+
+            if (DateTime.Now.Month <= 7)
+            {
+                rosterYear = (DateTime.Now.Year - 1).ToString() + DateTime.Now.Year.ToString();
+            }
+            else
+            {
+                rosterYear = DateTime.Now.Year.ToString() + (DateTime.Now.Year + 1).ToString();
+            }
+
+            while (rosterYear != "19161917")
+            {
+                Console.WriteLine(rosterYear);
+                Players = await builder.BuildAllPlayersAsync(rosterYear);
+
+                for (int i = 0; i < Players.Count; i++)
+                {
+                    var dbPlayer = context.Players.Find(Players[i].PlayerId);
+                    if (dbPlayer == null)
+                    {
+                        context.Players.Add(Players[i]);
+                    }
+                    else
+                    {
+                        context.Entry(dbPlayer).CurrentValues.SetValues(Players[i]);
+                    }
+                }
+
+                var currentYear = rosterYear.Substring(0, 4);
+                int previousYear = Int32.Parse(currentYear) - 1;
+
+                rosterYear = (previousYear).ToString() + currentYear;
+            }
+            context.SaveChanges();
+        }
+
+        public List<Player> GetActivePlayers(HalfboardContext context)
+        {
+            IQueryable<Player> playersIQ = from p in context.Players
+                                           where p.IsActive == true
+                                           join t in context.Teams on p.TeamId equals t.TeamId
+                                           select new Player
+                                           {
+                                               PlayerId = p.PlayerId,
+                                               FirstName = p.FirstName,
+                                               LastName = p.LastName,
+                                               TeamId = p.TeamId,
+                                               CurrentTeam = t,
+                                               PrimaryNumber = p.PrimaryNumber,
+                                               BirthDate = p.BirthDate,
+                                               CurrentAge = p.CurrentAge,
+                                               BirthCity = p.BirthCity
+                                           };
+
+            //I could use this to get it ansync with Entity Framework 6
+            /*
+            var playersDb = await context.Players.Where(p => p.IsActive)
+                                    .Join(context.Teams,
+                                        player => player.TeamId,
+                                        team => team.TeamId,
+                                        (player, team) => new
+                                        {
+                                            PlayerId = player.PlayerId,
+                                            FirstName = player.FirstName,
+                                            LastName = player.LastName,
+                                            TeamId = player.TeamId,
+                                            CurrentTeam = team,
+                                            PrimaryNumber = player.PrimaryNumber,
+                                            BirthDate = player.BirthDate,
+                                            CurrentAge = player.CurrentAge,
+                                            BirthCity = player.BirthCity
+                                        })
+                                    .ToListAsync();
+            */
+
+            var players = playersIQ.ToList();
+
+            return players;
+        }
     }
 }
