@@ -15,6 +15,7 @@ using HalfboardStats.Core.JsonMappers.StandingsMappers;
 using HalfboardStats.Core.Builders;
 using HalfboardStats.Infrastructure.ServiceAgents;
 using HalfboardStats.Infrastructure.Repositories;
+using HalfboardStats.Application;
 
 namespace HalfboardStats
 {
@@ -43,6 +44,7 @@ namespace HalfboardStats
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<ITeamBuilder, TeamBuilder>();
             services.AddScoped<ITeamLocalRepository, TeamLocalRepository>();
+            services.AddScoped<IPlayerFacade, PlayerFacade>();
 
             services.AddRazorPages();
             services.AddMvc().AddRazorPagesOptions(opt => {
