@@ -28,7 +28,7 @@ namespace HalfboardStats.Core.Builders
             {
                 var team = new Team();
 
-                team.TeamId = t.Id;
+                team.Id = t.Id;
                 team.DivisionId = t.Division.Id;
                 team.FranchiseId = t.FranchiseId;
                 team.Name = t.Name;

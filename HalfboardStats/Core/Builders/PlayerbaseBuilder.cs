@@ -53,7 +53,7 @@ namespace HalfboardStats.Core.Builders
         private Player AdaptPlayer(RosterPersonMapper playerMapper)
         {
             var person = new Player();
-            person.PlayerId = playerMapper.Person.Id;
+            person.Id = playerMapper.Person.Id;
 
             string[] names = playerMapper.Person.FullName.Split(' ');
             person.FirstName = names.First();

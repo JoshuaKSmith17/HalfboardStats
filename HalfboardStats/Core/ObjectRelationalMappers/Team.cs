@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HalfboardStats.Core.ObjectRelationalMappers
 {
-    public class Team
+    public class Team : IEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int TeamId { get; set; }
+        public int Id { get; set; }
         public int DivisionId { get; set; }
         public int FranchiseId { get; set; }
         public string Name { get; set; }

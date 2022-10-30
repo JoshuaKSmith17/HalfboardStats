@@ -25,7 +25,7 @@ namespace HalfboardStats.Infrastructure.Repositories
             //Add or update a record
             for (int i = 0; i < Players.Count; i++)
             {
-                var dbPlayer = context.Players.Find(Players[i].PlayerId);
+                var dbPlayer = context.Players.Find(Players[i].Id);
                 if (dbPlayer == null)
                 {
                     context.Players.Add(Players[i]);
@@ -60,7 +60,7 @@ namespace HalfboardStats.Infrastructure.Repositories
 
                 for (int i = 0; i < Players.Count; i++)
                 {
-                    var dbPlayer = context.Players.Find(Players[i].PlayerId);
+                    var dbPlayer = context.Players.Find(Players[i].Id);
                     if (dbPlayer == null)
                     {
                         context.Players.Add(Players[i]);
@@ -83,10 +83,10 @@ namespace HalfboardStats.Infrastructure.Repositories
         {
             IQueryable<Player> playersIQ = from p in context.Players
                                            where p.IsActive == true
-                                           join t in context.Teams on p.TeamId equals t.TeamId
+                                           join t in context.Teams on p.TeamId equals t.Id
                                            select new Player
                                            {
-                                               PlayerId = p.PlayerId,
+                                               Id = p.Id,
                                                FirstName = p.FirstName,
                                                LastName = p.LastName,
                                                TeamId = p.TeamId,
