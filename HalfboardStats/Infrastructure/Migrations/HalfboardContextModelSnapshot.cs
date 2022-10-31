@@ -87,17 +87,12 @@ namespace HalfboardStats.Migrations
                     b.ToTable("Player");
                 });
 
-            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.PlayerSeason", b =>
+            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
                 {
-                    b.Property<int>("PlayerSeasonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Assists")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("BlockedShots")
+                    b.Property<int>("Assists")
                         .HasColumnType("int");
 
                     b.Property<string>("EvenStrengthTimeOnIce")
@@ -106,8 +101,8 @@ namespace HalfboardStats.Migrations
                     b.Property<string>("EvenTimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FaceOffPct")
-                        .HasColumnType("int");
+                    b.Property<double>("FaceOffPct")
+                        .HasColumnType("float");
 
                     b.Property<int>("GameWinningGoals")
                         .HasColumnType("int");
@@ -151,12 +146,6 @@ namespace HalfboardStats.Migrations
                     b.Property<string>("PowerPlayTimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Season")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SeasonSplit")
-                        .HasColumnType("int");
-
                     b.Property<int>("Shifts")
                         .HasColumnType("int");
 
@@ -172,26 +161,31 @@ namespace HalfboardStats.Migrations
                     b.Property<string>("ShortHandedTimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShotPct")
-                        .HasColumnType("int");
+                    b.Property<double>("ShotPct")
+                        .HasColumnType("float");
 
                     b.Property<int>("Shots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShotsBlocked")
                         .HasColumnType("int");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TimeOnIce")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PlayerSeasonId");
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("PlayerSeason");
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("RegularSeasonStats");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Team", b =>
@@ -268,13 +262,23 @@ namespace HalfboardStats.Migrations
                     b.Navigation("CurrentTeam");
                 });
 
-            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.PlayerSeason", b =>
+            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
                 {
-                    b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Player", null)
+                    b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Player", "Player")
                         .WithMany("PlayerSeasons")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.TeamSeason", b =>
