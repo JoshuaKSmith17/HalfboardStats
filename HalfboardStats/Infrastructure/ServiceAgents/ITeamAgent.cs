@@ -6,7 +6,7 @@ using HalfboardStats.Core.JsonMappers.StandingsMappers;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
-    interface ITeamRepository
+    interface ITeamAgent
     {
         public Task<List<TeamMapper>> GetTeams();
     }
