@@ -90,7 +90,9 @@ namespace HalfboardStats.Migrations
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Assists")
                         .HasColumnType("int");
@@ -121,9 +123,6 @@ namespace HalfboardStats.Migrations
 
                     b.Property<string>("PenaltyMinutes")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Pim")
-                        .HasColumnType("int");
 
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
@@ -265,7 +264,7 @@ namespace HalfboardStats.Migrations
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
                 {
                     b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Player", "Player")
-                        .WithMany("PlayerSeasons")
+                        .WithMany("RegularSeasonStats")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -292,7 +291,7 @@ namespace HalfboardStats.Migrations
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Player", b =>
                 {
-                    b.Navigation("PlayerSeasons");
+                    b.Navigation("RegularSeasonStats");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Team", b =>
