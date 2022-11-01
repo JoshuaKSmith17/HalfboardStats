@@ -19,7 +19,7 @@ namespace HalfboardStats.Core.Builders
 
         public async Task<List<Team>> BuildTeams()
         {
-            var repo = (ITeamRepository)ServiceProvider.GetService(typeof(ITeamRepository));
+            var repo = (ITeamAgent)ServiceProvider.GetService(typeof(ITeamAgent));
             List<Team> teams = new List<Team>();
 
             List<TeamMapper> teamMapper = await repo.GetTeams();
