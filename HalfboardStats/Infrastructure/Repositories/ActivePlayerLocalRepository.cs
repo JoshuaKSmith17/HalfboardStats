@@ -122,5 +122,13 @@ namespace HalfboardStats.Infrastructure.Repositories
 
             return players;
         }
+
+        public List<Player> GetPlayers(HalfboardContext context)
+        {
+            IQueryable<Player> playersIQ = from p in context.Players                                           
+                                           select p;
+
+            return playersIQ.ToList<Player>();
+        }
     }
 }
