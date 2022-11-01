@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using HalfboardStats.Core.ObjectRelationalMappers;
 using HalfboardStats.Application;
+using System.Threading.Tasks;
 
 namespace HalfboardStats.Presentation.Pages
 {
@@ -10,22 +11,20 @@ namespace HalfboardStats.Presentation.Pages
     {
         IServiceProvider ServiceProvider;
         HalfboardContext Context;
-        IPlayerFacade Facade;
-        public List<Player> Players { get; set; }
+        IStatsFacade Facade;
+        public List<RegularSeasonStats> SkaterStats { get; set; }
 
         public PlayersModel(IServiceProvider serviceProvider, HalfboardContext context)
         {
             ServiceProvider = serviceProvider;
             Context = context;
-            Facade = (IPlayerFacade)ServiceProvider.GetService(typeof(IPlayerFacade));
+            Facade = (IStatsFacade)ServiceProvider.GetService(typeof(IStatsFacade));
         }
 
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            Players = Facade.GetActivePlayers();
-            
-            Players.Sort((playerOne, playerTwo) => playerOne.LastName.CompareTo(playerTwo.LastName));
+            SkaterStats = await Facade.GetCurrentStatsAsync();
 
         }
     }
