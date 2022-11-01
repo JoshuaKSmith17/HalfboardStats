@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HalfboardStats.Core.ObjectRelationalMappers
 {
-    public class Player
+    public class Player : IEntity
     {
         /*
          * This class is mainly mapped to PeopleMapper.cs.  PeopleMapper is the main area of the API that we are pulling
@@ -14,7 +14,7 @@ namespace HalfboardStats.Core.ObjectRelationalMappers
          */
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int PlayerId { get; set; }
+        public int Id { get; set; }
         public int TeamId { get; set; }
         public virtual Team CurrentTeam { get; set; }
         public string FirstName { get; set; }
@@ -35,6 +35,6 @@ namespace HalfboardStats.Core.ObjectRelationalMappers
         public string ShootsCatches { get; set; }
         public string RosterStatus { get; set; }
         public Position PlayingPosition { get; set; }
-        public List<PlayerSeason> PlayerSeasons { get; set; }
+        public List<RegularSeasonStats> RegularSeasonStats { get; set; }
     }
 }

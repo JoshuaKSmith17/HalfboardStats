@@ -9,6 +9,7 @@ using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 using HalfboardStats.Core.ObjectRelationalMappers;
 using HalfboardStats.Core.Builders;
 using HalfboardStats.Infrastructure.Repositories;
+using HalfboardStats.Core.Controllers;
 
 namespace HalfboardStats.Presentation.Pages
 {
@@ -30,15 +31,21 @@ namespace HalfboardStats.Presentation.Pages
         {
             StandingsBuilder builder = new StandingsBuilder(ServiceProvider);
             Standings = await builder.BuildStandings();
+
+            //var statsBuilder = (ICareerStatsBuilder)ServiceProvider.GetService(typeof(ICareerStatsBuilder));
+            //statsBuilder.GetCareerStats(8475765);
         }
 
         public void OnPost()
         {
-            var repo = (IActivePlayerLocalRepository)ServiceProvider.GetService(typeof(IActivePlayerLocalRepository));
-            repo.CreateAllPlayersAsync(Context);
+            //var repo = (IActivePlayerLocalRepository)ServiceProvider.GetService(typeof(IActivePlayerLocalRepository));
+            //repo.CreateAllPlayersAsync(Context);
 
-            var teamRepo = (ITeamLocalRepository)ServiceProvider.GetService(typeof(ITeamLocalRepository));
-            teamRepo.CreateTeams(Context);
+            //var teamRepo = (ITeamLocalRepository)ServiceProvider.GetService(typeof(ITeamLocalRepository));
+            //teamRepo.CreateTeams(Context);
+
+            var controller = (IPlayerStatScraperController)ServiceProvider.GetService(typeof(IPlayerStatScraperController));
+            controller.ScrapePlayerStats();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace HalfboardStats.Infrastructure.Repositories
         public void CreateActivePlayers(HalfboardContext context);
         public List<Player> GetActivePlayers(HalfboardContext context);
         public void CreateAllPlayersAsync(HalfboardContext context);
+        public List<Player> GetPlayers(HalfboardContext context);
     }
 }

@@ -3,14 +3,16 @@ using HalfboardStats.Core.ObjectRelationalMappers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HalfboardStats.Migrations
 {
     [DbContext(typeof(HalfboardContext))]
-    partial class HalfboardContextModelSnapshot : ModelSnapshot
+    [Migration("20221031010145_FixedPlayerSeasonRelationship")]
+    partial class FixedPlayerSeasonRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,9 +92,7 @@ namespace HalfboardStats.Migrations
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("Assists")
                         .HasColumnType("int");
@@ -123,6 +123,9 @@ namespace HalfboardStats.Migrations
 
                     b.Property<string>("PenaltyMinutes")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Pim")
+                        .HasColumnType("int");
 
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
@@ -264,7 +267,7 @@ namespace HalfboardStats.Migrations
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
                 {
                     b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Player", "Player")
-                        .WithMany("RegularSeasonStats")
+                        .WithMany("PlayerSeasons")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -291,7 +294,7 @@ namespace HalfboardStats.Migrations
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Player", b =>
                 {
-                    b.Navigation("RegularSeasonStats");
+                    b.Navigation("PlayerSeasons");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Team", b =>

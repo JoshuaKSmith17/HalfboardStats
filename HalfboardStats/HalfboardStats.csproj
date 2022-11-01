@@ -25,7 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\" />
+    <Folder Include="Application\Extensions\" />
+    <Folder Include="Application\Factories\" />
   </ItemGroup>
 
 </Project>

@@ -19,7 +19,7 @@ namespace HalfboardStats.Core.Builders
 
         public async Task<List<Team>> BuildTeams()
         {
-            var repo = (ITeamRepository)ServiceProvider.GetService(typeof(ITeamRepository));
+            var repo = (ITeamAgent)ServiceProvider.GetService(typeof(ITeamAgent));
             List<Team> teams = new List<Team>();
 
             List<TeamMapper> teamMapper = await repo.GetTeams();
@@ -28,7 +28,7 @@ namespace HalfboardStats.Core.Builders
             {
                 var team = new Team();
 
-                team.TeamId = t.Id;
+                team.Id = t.Id;
                 team.DivisionId = t.Division.Id;
                 team.FranchiseId = t.FranchiseId;
                 team.Name = t.Name;

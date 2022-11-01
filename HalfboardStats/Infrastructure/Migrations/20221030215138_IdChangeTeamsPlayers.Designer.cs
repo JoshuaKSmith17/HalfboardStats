@@ -3,14 +3,16 @@ using HalfboardStats.Core.ObjectRelationalMappers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HalfboardStats.Migrations
 {
     [DbContext(typeof(HalfboardContext))]
-    partial class HalfboardContextModelSnapshot : ModelSnapshot
+    [Migration("20221030215138_IdChangeTeamsPlayers")]
+    partial class IdChangeTeamsPlayers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,14 +89,17 @@ namespace HalfboardStats.Migrations
                     b.ToTable("Player");
                 });
 
-            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
+            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.PlayerSeason", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PlayerSeasonId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Assists")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlockedShots")
                         .HasColumnType("int");
 
                     b.Property<string>("EvenStrengthTimeOnIce")
@@ -103,8 +108,8 @@ namespace HalfboardStats.Migrations
                     b.Property<string>("EvenTimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("FaceOffPct")
-                        .HasColumnType("float");
+                    b.Property<int>("FaceOffPct")
+                        .HasColumnType("int");
 
                     b.Property<int>("GameWinningGoals")
                         .HasColumnType("int");
@@ -123,6 +128,9 @@ namespace HalfboardStats.Migrations
 
                     b.Property<string>("PenaltyMinutes")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Pim")
+                        .HasColumnType("int");
 
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
@@ -145,6 +153,12 @@ namespace HalfboardStats.Migrations
                     b.Property<string>("PowerPlayTimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Season")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SeasonSplit")
+                        .HasColumnType("int");
+
                     b.Property<int>("Shifts")
                         .HasColumnType("int");
 
@@ -160,31 +174,26 @@ namespace HalfboardStats.Migrations
                     b.Property<string>("ShortHandedTimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ShotPct")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Shots")
+                    b.Property<int>("ShotPct")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShotsBlocked")
+                    b.Property<int>("Shots")
                         .HasColumnType("int");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
+                    b.Property<string>("TimeOnIce")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TimeOnIcePerGame")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Year")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
+                    b.HasKey("PlayerSeasonId");
 
                     b.HasIndex("PlayerId");
 
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("RegularSeasonStats");
+                    b.ToTable("PlayerSeason");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Team", b =>
@@ -261,23 +270,13 @@ namespace HalfboardStats.Migrations
                     b.Navigation("CurrentTeam");
                 });
 
-            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
+            modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.PlayerSeason", b =>
                 {
-                    b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Player", "Player")
-                        .WithMany("RegularSeasonStats")
+                    b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Player", null)
+                        .WithMany("PlayerSeasons")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Player");
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.TeamSeason", b =>
@@ -291,7 +290,7 @@ namespace HalfboardStats.Migrations
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Player", b =>
                 {
-                    b.Navigation("RegularSeasonStats");
+                    b.Navigation("PlayerSeasons");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Team", b =>

@@ -15,6 +15,8 @@ using HalfboardStats.Core.JsonMappers.StandingsMappers;
 using HalfboardStats.Core.Builders;
 using HalfboardStats.Infrastructure.ServiceAgents;
 using HalfboardStats.Infrastructure.Repositories;
+using HalfboardStats.Application;
+using HalfboardStats.Core.Controllers;
 
 namespace HalfboardStats
 {
@@ -40,9 +42,15 @@ namespace HalfboardStats
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IPlayerbaseBuilder, PlayerbaseBuilder>();
             services.AddScoped<IActivePlayerLocalRepository, ActivePlayerLocalRepository>();
-            services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<ITeamAgent, TeamNhlApiAgent>();
             services.AddScoped<ITeamBuilder, TeamBuilder>();
             services.AddScoped<ITeamLocalRepository, TeamLocalRepository>();
+            services.AddScoped<IPlayerFacade, PlayerFacade>();
+            services.AddScoped<IYearByYearStatsAgent, YearByYearStatsAgent>();
+            services.AddScoped<ICareerStatsBuilder, CareerStatsBuilder>();
+            services.AddScoped<IStatsRepository, StatsRepository>();
+            services.AddScoped<IPlayerStatScraperController, PlayerStatScraperController>();
+            services.AddScoped<IStatsFacade, StatsFacade>();
 
             services.AddRazorPages();
             services.AddMvc().AddRazorPagesOptions(opt => {

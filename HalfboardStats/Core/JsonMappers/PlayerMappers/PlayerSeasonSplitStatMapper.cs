@@ -19,8 +19,8 @@ namespace HalfboardStats.Core.JsonMappers.PlayerMappers
         public string PowerPlayTimeOnIce { get; set; }
         public string EvenStrengthTimeOnIce { get; set; }
         public string PenaltyMinutes { get; set; }
-        public int FaceOffPct { get; set; }
-        public int ShotPct { get; set; }
+        public double FaceOffPct { get; set; }
+        public double ShotPct { get; set; }
         public int GameWinningGoals { get; set; }
         public int OverTimeGoals { get; set; }
         public int ShortHandedGoals { get; set; }

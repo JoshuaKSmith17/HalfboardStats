@@ -3,14 +3,16 @@ using HalfboardStats.Core.ObjectRelationalMappers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HalfboardStats.Migrations
 {
     [DbContext(typeof(HalfboardContext))]
-    partial class HalfboardContextModelSnapshot : ModelSnapshot
+    [Migration("20221031041229_DropRegularSeasonStatsToReAdd")]
+    partial class DropRegularSeasonStatsToReAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,7 +266,7 @@ namespace HalfboardStats.Migrations
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.RegularSeasonStats", b =>
                 {
                     b.HasOne("HalfboardStats.Core.ObjectRelationalMappers.Player", "Player")
-                        .WithMany("RegularSeasonStats")
+                        .WithMany("PlayerSeasons")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -291,7 +293,7 @@ namespace HalfboardStats.Migrations
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Player", b =>
                 {
-                    b.Navigation("RegularSeasonStats");
+                    b.Navigation("PlayerSeasons");
                 });
 
             modelBuilder.Entity("HalfboardStats.Core.ObjectRelationalMappers.Team", b =>

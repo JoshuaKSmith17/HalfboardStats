@@ -24,7 +24,7 @@ namespace HalfboardStats.Infrastructure.Repositories
 
             foreach (var team in Teams)
             {
-                var dbTeam = context.Teams.Find(team.TeamId);
+                var dbTeam = context.Teams.Find(team.Id);
                 if (dbTeam == null)
                 {
                     context.Teams.Add(team);

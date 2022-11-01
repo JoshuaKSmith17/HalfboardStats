@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using HalfboardStats.Core.Builders;
 using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Application;
+using System.Threading.Tasks;
 
 namespace HalfboardStats.Presentation.Pages
 {
@@ -13,36 +11,20 @@ namespace HalfboardStats.Presentation.Pages
     {
         IServiceProvider ServiceProvider;
         HalfboardContext Context;
-        public List<Player> Players { get; set; }
+        IStatsFacade Facade;
+        public List<RegularSeasonStats> SkaterStats { get; set; }
 
         public PlayersModel(IServiceProvider serviceProvider, HalfboardContext context)
         {
             ServiceProvider = serviceProvider;
             Context = context;
+            Facade = (IStatsFacade)ServiceProvider.GetService(typeof(IStatsFacade));
         }
 
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            IQueryable<Player> playersIQ = from p in Context.Players
-                                           where p.IsActive == true
-                                           join t in Context.Teams on p.TeamId equals t.TeamId
-                                           select new Player
-                                           {
-                                               PlayerId = p.PlayerId,
-                                               FirstName = p.FirstName,
-                                               LastName = p.LastName,
-                                               TeamId = p.TeamId,
-                                               CurrentTeam = t,
-                                               PrimaryNumber = p.PrimaryNumber,
-                                               BirthDate = p.BirthDate,
-                                               CurrentAge = p.CurrentAge,
-                                               BirthCity = p.BirthCity
-                                           };
-
-            Players = new List<Player>(playersIQ);
-
-            Players.Sort((playerOne, playerTwo) => playerOne.LastName.CompareTo(playerTwo.LastName));
+            SkaterStats = await Facade.GetCurrentStatsAsync();
 
         }
     }
