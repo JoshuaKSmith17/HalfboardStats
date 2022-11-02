@@ -37,7 +37,9 @@ namespace HalfboardStats
 
             services.AddScoped<IStandingsMapper, StandingsMapper>();
             services.AddScoped<IStandings, Standings>();
+            services.AddScoped<IStandingsBuilder, StandingsBuilder>();
             services.AddScoped<IStandingsRepository, StandingsRepository>();
+            services.AddScoped<IStandingsFacade, StandingsFacade>();
             services.AddTransient<ITeamRecord, TeamRecord>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IPlayerbaseBuilder, PlayerbaseBuilder>();
