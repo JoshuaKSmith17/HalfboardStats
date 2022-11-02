@@ -8,6 +8,6 @@ namespace HalfboardStats.Infrastructure.Repositories
 {
     interface ITeamLocalRepository
     {
-        public void CreateTeams(HalfboardContext context);
+        public void CreateTeams();
     }
 }

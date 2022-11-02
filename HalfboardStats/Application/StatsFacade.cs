@@ -9,12 +9,11 @@ namespace HalfboardStats.Application
 {
     public class StatsFacade : IStatsFacade
     {
-        public IServiceProvider ServiceProvider { get; set; }
-        public HalfboardContext Context { get; set; }
-        public StatsFacade(IServiceProvider serviceProvider, HalfboardContext context)
+        public IStatsRepository StatsRepository { get; set; }
+
+        public StatsFacade(IStatsRepository repository)
         {
-            ServiceProvider = serviceProvider;
-            Context = context;
+            StatsRepository = repository;
         }
 
         public async Task<List<RegularSeasonStats>> GetCurrentStatsAsync()
@@ -30,8 +29,7 @@ namespace HalfboardStats.Application
                 currentDate = DateTime.Now.Year.ToString() + (DateTime.Now.Year + 1).ToString();
             }
 
-            var repo = (IStatsRepository)ServiceProvider.GetService(typeof(IStatsRepository));
-            List<RegularSeasonStats> currentSeasonStats = await repo.GetCurrentStatsAsync(currentDate);
+            List<RegularSeasonStats> currentSeasonStats = await StatsRepository.GetCurrentStatsAsync(currentDate);
 
             return currentSeasonStats;
         }

@@ -8,9 +8,7 @@ namespace HalfboardStats.Infrastructure.Repositories
     public interface IStatsRepository
     {
         HalfboardContext Context { get; set; }
-        IServiceProvider ServiceProvider { get; set; }
-
-        void CreateCareerStats(List<RegularSeasonStats> stats);
+        Task CreateCareerStatsAsync(List<RegularSeasonStats> stats);
         Task<List<RegularSeasonStats>> GetCurrentStatsAsync(string currentYear);
     }
 }

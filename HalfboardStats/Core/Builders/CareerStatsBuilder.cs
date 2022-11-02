@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 namespace HalfboardStats.Core.Builders
 {
     public class CareerStatsBuilder : ICareerStatsBuilder
-    {
-        public IServiceProvider ServiceProvider { get; set; }
-        public CareerStatsBuilder(IServiceProvider serviceProvider)
+    {        
+        public CareerStatsBuilder()
         {
-            ServiceProvider = serviceProvider;
         }
 
         public List<RegularSeasonStats> BuildCareerStatsAsync(int Id, YearByYearMapper playerStats)

@@ -9,32 +9,33 @@ namespace HalfboardStats.Infrastructure.Repositories
 {
     public class TeamLocalRepository : ITeamLocalRepository
     {
-        public IServiceProvider ServiceProvider { get; set; }
+        public ITeamBuilder Builder { get; set; }
+        public HalfboardContext Context { get; set; }
         public List<Team> Teams { get; set; }
 
-        public TeamLocalRepository(IServiceProvider serviceProvider)
+        public TeamLocalRepository(ITeamBuilder builder, HalfboardContext context)
         {
-            ServiceProvider = serviceProvider;
+            Builder = builder;
+            Context = context;
         }
 
-        public async void CreateTeams(HalfboardContext context)
+        public async void CreateTeams()
         {
-            var builder = (ITeamBuilder)ServiceProvider.GetService(typeof(ITeamBuilder));
-            Teams = await builder.BuildTeams();
+            Teams = await Builder.BuildTeams();
 
             foreach (var team in Teams)
             {
-                var dbTeam = context.Teams.Find(team.Id);
+                var dbTeam = Context.Teams.Find(team.Id);
                 if (dbTeam == null)
                 {
-                    context.Teams.Add(team);
+                    Context.Teams.Add(team);
                 }
                 else
                 {
-                    context.Entry(dbTeam).CurrentValues.SetValues(team);
+                    Context.Entry(dbTeam).CurrentValues.SetValues(team);
                 }
             }
-            context.SaveChanges();
+            Context.SaveChanges();
         }
     }
 }

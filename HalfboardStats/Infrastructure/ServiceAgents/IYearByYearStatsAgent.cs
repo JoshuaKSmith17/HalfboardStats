@@ -1,13 +1,13 @@
 ﻿using HalfboardStats.Core.JsonMappers.StatsMappers;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
     public interface IYearByYearStatsAgent
     {
-        IServiceProvider ServiceProvider { get; set; }
-
+        IHttpClientFactory ClientFactory { get; set; }
         Task<YearByYearMapper> GetCareerStats(int Id);
     }
 }

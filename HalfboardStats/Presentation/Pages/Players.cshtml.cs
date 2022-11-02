@@ -9,18 +9,13 @@ namespace HalfboardStats.Presentation.Pages
 {
     public class PlayersModel : PageModel
     {
-        IServiceProvider ServiceProvider;
-        HalfboardContext Context;
         IStatsFacade Facade;
-        public List<RegularSeasonStats> SkaterStats { get; set; }
+        public IList<RegularSeasonStats> SkaterStats { get; set; }
 
-        public PlayersModel(IServiceProvider serviceProvider, HalfboardContext context)
+        public PlayersModel(IStatsFacade facade)
         {
-            ServiceProvider = serviceProvider;
-            Context = context;
-            Facade = (IStatsFacade)ServiceProvider.GetService(typeof(IStatsFacade));
+            Facade = facade;
         }
-
 
         public async Task OnGetAsync()
         {

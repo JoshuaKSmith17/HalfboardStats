@@ -13,22 +13,18 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
 {
     public class StandingsRepository : IStandingsRepository
     {
-        IStandingsMapper Standings;
-        IServiceProvider ServiceProvider { get; }
+        public IStandingsMapper Standings { get; set; }
+        public IHttpClientFactory ClientFactory { get; set; }
 
-        public StandingsRepository(IServiceProvider serviceProvider)
+        public StandingsRepository(IStandingsMapper standings, IHttpClientFactory clientFactory)
         {
-            Standings = (IStandingsMapper)serviceProvider.GetService(typeof(IStandingsMapper));
-            ServiceProvider = serviceProvider;
-
+            Standings = standings;
+            ClientFactory = clientFactory;
         }
 
         public async Task<IStandingsMapper> GetStandings()
         {
-            var factory = (IHttpClientFactory)ServiceProvider.GetService(typeof(IHttpClientFactory));
-
-            var client = factory.CreateClient();
-
+            var client = ClientFactory.CreateClient();
             client.BaseAddress = new Uri("https://statsapi.web.nhl.com/api/v1/");
             var responseTask = client.GetAsync("standings");
             responseTask.Wait();

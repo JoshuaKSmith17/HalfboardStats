@@ -6,23 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 using HalfboardStats.Core.Builders;
+using HalfboardStats.Application;
 
 namespace HalfboardStats.Presentation.Pages
 {
     public class StandingsModel : PageModel
     {
         public IDictionary<string, IEnumerable<ITeamRecord>> Standings { get; set; }
+        public IStandingsFacade StandingsFacade { get; set; }
 
-        IServiceProvider ServiceProvider;
-
-        public StandingsModel(IServiceProvider serviceProvider)
+        public StandingsModel(IStandingsFacade facade)
         {
-            ServiceProvider = serviceProvider;
+            StandingsFacade = facade;
         }
-        public async void OnGetAsync()
+        public async Task OnGetAsync()
         {
-            StandingsBuilder builder = new StandingsBuilder(ServiceProvider);
-            Standings = await builder.BuildStandings();
+            Standings = await StandingsFacade.GetStandings();
         }
     }
 }

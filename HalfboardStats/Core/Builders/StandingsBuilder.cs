@@ -8,13 +8,19 @@ using HalfboardStats.Infrastructure.ServiceAgents;
 
 namespace HalfboardStats.Core.Builders
 {
-    public class StandingsBuilder
+    public class StandingsBuilder : IStandingsBuilder
     {
         IServiceProvider ServiceProvider;
+        public IStandings Standings { get; set; }
+        public IStandingsMapper StandingsMapper { get; set; }
+        public IStandingsRepository Repository { get; set; }
 
-        public StandingsBuilder(IServiceProvider serviceProvider)
+        public StandingsBuilder(IServiceProvider serviceProvider, IStandings standings, IStandingsMapper mapper, IStandingsRepository repository)
         {
             ServiceProvider = serviceProvider;
+            Standings = standings;
+            StandingsMapper = mapper;
+            Repository = repository;
         }
         public async Task<IDictionary<string, IEnumerable<ITeamRecord>>> BuildStandings()
         {
@@ -23,41 +29,39 @@ namespace HalfboardStats.Core.Builders
              * Since there is a lot of logic needed to perform the transfer, this logic is separated out from the class it creates.  It also
              * serves as a way to separate some logic from classes that will serve as the model for our database.
              */
-            IStandings standings = (IStandings)ServiceProvider.GetService(typeof(IStandings));
-            IStandingsMapper mapper = (IStandingsMapper)ServiceProvider.GetService(typeof(IStandingsMapper));
-            IStandingsRepository repo = (IStandingsRepository)ServiceProvider.GetService(typeof(IStandingsRepository));
 
             var standingsDictionary = new Dictionary<string, IEnumerable<ITeamRecord>>();
 
-            mapper = await repo.GetStandings();
+            StandingsMapper = await Repository.GetStandings();
 
-            for (int i = 0; i < mapper.Records.Count; i++)
+            for (int i = 0; i < StandingsMapper.Records.Count; i++)
             {
-                for (int j = 0; j < mapper.Records[i].TeamRecords.Count; j++)
+                for (int j = 0; j < StandingsMapper.Records[i].TeamRecords.Count; j++)
                 {
+                    // TODO: Need a factory to replace this service locator.
                     ITeamRecord record = (ITeamRecord)ServiceProvider.GetService(typeof(ITeamRecord));
-                    record.TeamRecordId = mapper.Records[i].TeamRecords[j].Team.Id;
-                    record.TeamName = mapper.Records[i].TeamRecords[j].Team.Name;
-                    record.Conference = mapper.Records[i].Conference.Name;
-                    record.Division = mapper.Records[i].Division.Name;
+                    record.TeamRecordId = StandingsMapper.Records[i].TeamRecords[j].Team.Id;
+                    record.TeamName = StandingsMapper.Records[i].TeamRecords[j].Team.Name;
+                    record.Conference = StandingsMapper.Records[i].Conference.Name;
+                    record.Division = StandingsMapper.Records[i].Division.Name;
 
 
-                    record.Wins = mapper.Records[i].TeamRecords[j].LeagueRecord.Wins;
-                    record.Losses = mapper.Records[i].TeamRecords[j].LeagueRecord.Losses;
-                    record.OvertimeLosses = mapper.Records[i].TeamRecords[j].LeagueRecord.Ot;
+                    record.Wins = StandingsMapper.Records[i].TeamRecords[j].LeagueRecord.Wins;
+                    record.Losses = StandingsMapper.Records[i].TeamRecords[j].LeagueRecord.Losses;
+                    record.OvertimeLosses = StandingsMapper.Records[i].TeamRecords[j].LeagueRecord.Ot;
 
-                    record.Points = mapper.Records[i].TeamRecords[j].Points;
+                    record.Points = StandingsMapper.Records[i].TeamRecords[j].Points;
 
                     record.PointsPercentage = record.Points / ((double)(record.Wins + record.Losses + record.OvertimeLosses) * 2);
 
-                    standings.TeamRecords.Add(record);
+                    this.Standings.TeamRecords.Add(record);
                 }
             }
 
-            standingsDictionary.Add("LeagueStandings", standings.TeamRecords);
+            standingsDictionary.Add("LeagueStandings", Standings.TeamRecords);
 
             IEnumerable<ITeamRecord> westDivision =
-                from teamRecord in standings.TeamRecords
+                from teamRecord in Standings.TeamRecords
                 where teamRecord.Division.Contains("Metropolitan")
                 select teamRecord;
 
@@ -66,7 +70,7 @@ namespace HalfboardStats.Core.Builders
             standingsDictionary.Add("Metropolitan", westDivision);
 
             IEnumerable<ITeamRecord> northDivision =
-                from teamRecord in standings.TeamRecords
+                from teamRecord in Standings.TeamRecords
                 where teamRecord.Division.Contains("Atlantic")
                 select teamRecord;
 
@@ -75,7 +79,7 @@ namespace HalfboardStats.Core.Builders
             standingsDictionary.Add("Atlantic", northDivision);
 
             IEnumerable<ITeamRecord> centralDivision =
-                from teamRecord in standings.TeamRecords
+                from teamRecord in Standings.TeamRecords
                 where teamRecord.Division.Contains("Central")
                 select teamRecord;
 
@@ -84,7 +88,7 @@ namespace HalfboardStats.Core.Builders
             standingsDictionary.Add("CentralDivision", centralDivision);
 
             IEnumerable<ITeamRecord> eastDivision =
-                from teamRecord in standings.TeamRecords
+                from teamRecord in Standings.TeamRecords
                 where teamRecord.Division.Contains("Pacific")
                 select teamRecord;
 

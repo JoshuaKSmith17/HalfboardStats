@@ -1,4 +1,5 @@
 ﻿using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,7 @@ namespace HalfboardStats.Application
 {
     public interface IStatsFacade
     {
-        HalfboardContext Context { get; set; }
-        IServiceProvider ServiceProvider { get; set; }
-
+        public IStatsRepository StatsRepository { get; set; }
         Task<List<RegularSeasonStats>> GetCurrentStatsAsync();
     }
 }
