@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HalfboardStats.Core.ObjectRelationalMappers
 {
-    public class Player : IEntity
+    public class Player : IEntity, IPlayer
     {
         /*
          * This class is mainly mapped to PeopleMapper.cs.  PeopleMapper is the main area of the API that we are pulling
