@@ -4,7 +4,19 @@
 }
 <div class="container text-white">
     <h1>Players</h1>
-    <table class="table">
+    <div>
+        <ul class="nav">
+
+            <li class="nav-item">
+                <a class="nav-link btn btn-secondary mx-2" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage - 1)">Previous</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-secondary mx-2" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage + 1)">Next</a>
+            </li>
+        </ul>
+
+    </div>
+    <table class="table table-dark table-sm table-hover">
         <thead>
             <tr class="text-white">
                 <th>
@@ -17,52 +29,47 @@
                     Last Name
                 </th>
                 <th>
-                    Team
+                    Games
                 </th>
                 <th>
-                    Number
+                    Goals
                 </th>
                 <th>
-                    Birth Date
+                    Assists
                 </th>
                 <th>
-                    Age
-                </th>
-                <th>
-                    City of Birth
+                    Points
                 </th>
             </tr>
         </thead>
-        @foreach (var player in Model.Players)
+        @foreach (var Skater in Model.SkaterStats)
         {
             <tr class="text-white">
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.PlayerId)
+                    @Html.DisplayFor(modelPlayer => Skater.Id)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.FirstName)
+                    @Html.DisplayFor(modelPlayer => Skater.Player.FirstName)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.LastName)
+                    @Html.DisplayFor(modelPlayer => Skater.Player.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.CurrentTeam.Name)
+                    @Html.DisplayFor(modelPlayer => Skater.Games)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.PrimaryNumber)
+                    @Html.DisplayFor(modelPlayer => Skater.Goals)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.BirthDate)
+                    @Html.DisplayFor(modelPlayer => Skater.Assists)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelPlayer => player.CurrentAge)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelPlayer => player.BirthCity)
+                    @Html.DisplayFor(modelPlayer => Skater.Points)
                 </td>
             </tr>
         }
     </table>
-    </div>
+
+</div>

@@ -6,7 +6,7 @@ using HalfboardStats.Core.ObjectRelationalMappers;
 
 namespace HalfboardStats.Core.Builders
 {
-    interface IPlayerbaseBuilder
+    public interface IPlayerbaseBuilder
     {
         public Task<List<Player>> BuildPlayers();
 

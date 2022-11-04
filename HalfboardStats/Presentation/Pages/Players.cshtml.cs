@@ -1,49 +1,40 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Application;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using HalfboardStats.Core.Builders;
-using HalfboardStats.Core.ObjectRelationalMappers;
 
 namespace HalfboardStats.Presentation.Pages
 {
     public class PlayersModel : PageModel
     {
-        IServiceProvider ServiceProvider;
-        HalfboardContext Context;
-        public List<Player> Players { get; set; }
-
-        public PlayersModel(IServiceProvider serviceProvider, HalfboardContext context)
+        IStatsFacade Facade;
+        public IList<RegularSeasonStats> SkaterStats { get; set; }
+        [BindProperty]
+        public int CurrentPage { get; set; }
+        public int Count { get; set; }
+        public int PageSize { get; set; } = 50;
+        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+        
+        public PlayersModel(IStatsFacade facade)
         {
-            ServiceProvider = serviceProvider;
-            Context = context;
+            Facade = facade; 
         }
 
-
-        public void OnGet()
+        public async Task OnGetAsync(int currentPage)
         {
-            IQueryable<Player> playersIQ = from p in Context.Players
-                                           where p.IsActive == true
-                                           join t in Context.Teams on p.TeamId equals t.TeamId
-                                           select new Player
-                                           {
-                                               PlayerId = p.PlayerId,
-                                               FirstName = p.FirstName,
-                                               LastName = p.LastName,
-                                               TeamId = p.TeamId,
-                                               CurrentTeam = t,
-                                               PrimaryNumber = p.PrimaryNumber,
-                                               BirthDate = p.BirthDate,
-                                               CurrentAge = p.CurrentAge,
-                                               BirthCity = p.BirthCity
-                                           };
-
-            Players = new List<Player>(playersIQ);
-
-            Players.Sort((playerOne, playerTwo) => playerOne.LastName.CompareTo(playerTwo.LastName));
-
+            if (currentPage == 0)
+            {
+                CurrentPage = 1;
+            }
+            else
+            {
+                CurrentPage = currentPage;
+            }
+            SkaterStats = await Facade.GetPaginatedResultsAsync(CurrentPage, PageSize);
+            Count = await Facade.GetCountAsync();         
         }
     }
 }

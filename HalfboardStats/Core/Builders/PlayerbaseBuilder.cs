@@ -10,36 +10,30 @@ namespace HalfboardStats.Core.Builders
 {
     public class PlayerbaseBuilder : IPlayerbaseBuilder
     {
-        public IServiceProvider ServiceProvider { get; set; }
+        public IPlayerRepository Repository { get; set; }
 
-        public PlayerbaseBuilder(IServiceProvider serviceProvider)
+        public PlayerbaseBuilder(IPlayerRepository repository)
         {
-            ServiceProvider = serviceProvider;
+            Repository = repository;
         }
         public async Task<List<Player>> BuildPlayers()
         {
-            var repo = (IPlayerRepository)ServiceProvider.GetService(typeof(IPlayerRepository));
             List<Player> players = new List<Player>();
-
-            List<RosterPersonMapper> playerMapper = await repo.GetActivePlayers();
+            List<RosterPersonMapper> playerMapper = await Repository.GetActivePlayers();
 
             for (int i = 0; i < playerMapper.Count; i++)
             {
                 var person = AdaptPlayer(playerMapper[i]);
                 players.Add(person);
-
             }
 
             return players;
-
         }
 
         public async Task<List<Player>> BuildAllPlayersAsync(string rosterYear)
         {
-            var repo = (IPlayerRepository)ServiceProvider.GetService(typeof(IPlayerRepository));
             List<Player> players = new List<Player>();
-
-            List<RosterPersonMapper> playerMappers = await repo.GetAllPlayersAsync(rosterYear);
+            List<RosterPersonMapper> playerMappers = await Repository.GetAllPlayersAsync(rosterYear);
 
             foreach (var playerMapper in playerMappers)
             {
@@ -53,7 +47,7 @@ namespace HalfboardStats.Core.Builders
         private Player AdaptPlayer(RosterPersonMapper playerMapper)
         {
             var person = new Player();
-            person.PlayerId = playerMapper.Person.Id;
+            person.Id = playerMapper.Person.Id;
 
             string[] names = playerMapper.Person.FullName.Split(' ');
             person.FirstName = names.First();

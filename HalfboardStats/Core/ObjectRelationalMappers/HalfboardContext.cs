@@ -11,13 +11,13 @@ namespace HalfboardStats.Core.ObjectRelationalMappers
 
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<PlayerSeason> PlayerSeasons { get; set; }
+        public DbSet<RegularSeasonStats> RegularSeasonStats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Player>().ToTable("Player");
             modelBuilder.Entity<Team>().ToTable("Team");
-            modelBuilder.Entity<PlayerSeason>().ToTable("PlayerSeason");
+            modelBuilder.Entity<RegularSeasonStats>().ToTable("RegularSeasonStats");
         }
 
     }
