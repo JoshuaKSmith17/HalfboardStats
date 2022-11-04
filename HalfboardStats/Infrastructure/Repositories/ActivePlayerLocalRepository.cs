@@ -18,7 +18,7 @@ namespace HalfboardStats.Infrastructure.Repositories
             Builder = builder;
             Context = context;
         }
-        public async void CreateActivePlayers()
+        public async Task CreateActivePlayers()
         {
 
             Players = await Builder.BuildPlayers();
@@ -39,7 +39,7 @@ namespace HalfboardStats.Infrastructure.Repositories
             Context.SaveChanges();
         }
 
-        public async void CreateAllPlayersAsync()
+        public async Task CreateAllPlayersAsync()
         {     
             string rosterYear;
 

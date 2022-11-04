@@ -11,9 +11,9 @@ namespace HalfboardStats.Infrastructure.Repositories
     {
         public IPlayerbaseBuilder Builder { get; set; }
         public HalfboardContext Context { get; set; }
-        public void CreateActivePlayers();
+        public Task CreateActivePlayers();
         public List<Player> GetActivePlayers();
-        public void CreateAllPlayersAsync();
+        public Task CreateAllPlayersAsync();
         public List<Player> GetPlayers();
     }
 }
