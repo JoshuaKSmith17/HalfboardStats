@@ -42,26 +42,23 @@ namespace HalfboardStats
             services.AddScoped<IStandingsMapper, StandingsMapper>();
             services.AddScoped<IStandings, Standings>();
             services.AddScoped<IStandingsBuilder, StandingsBuilder>();
-            services.AddScoped<IStandingsRepository, StandingsRepository>();
+            services.AddScoped<IStandingsAgent, StandingNhlApiAgent>();
             services.AddScoped<IStandingsFacade, StandingsFacade>();
             services.AddTransient<ITeamRecord, TeamRecord>();
-            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IPlayerAgent, PlayerNhlApiAgent>();
             services.AddScoped<IPlayerbaseBuilder, PlayerbaseBuilder>();
-            services.AddScoped<IActivePlayerLocalRepository, ActivePlayerLocalRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<ITeamAgent, TeamNhlApiAgent>();
             services.AddScoped<ITeamBuilder, TeamBuilder>();
-            services.AddScoped<ITeamLocalRepository, TeamLocalRepository>();
+            services.AddScoped<Infrastructure.Repositories.ITeamRepository, TeamRepository>();
             services.AddScoped<IPlayerFacade, PlayerFacade>();
-            services.AddScoped<IYearByYearStatsAgent, YearByYearStatsAgent>();
+            services.AddScoped<IStatsAgent, StatsNhlApiAgent>();
             services.AddScoped<ICareerStatsBuilder, CareerStatsBuilder>();
             services.AddScoped<IStatsRepository, StatsRepository>();
             services.AddScoped<IPlayerStatScraperController, PlayerStatScraperController>();
             services.AddScoped<IStatsFacade, StatsFacade>();
-            //services.AddHostedService<QuartzHostedService>();
-            //services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-
-            //var scheduler = StdSchedulerFactory.GetDefaultScheduler().GetAwaiter().GetResult();
-            //services.AddSingleton(scheduler);
+            services.AddScoped<IPlayerController, PlayerController>();
+            services.AddScoped<ITeamController, TeamController>();
 
             services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
 
