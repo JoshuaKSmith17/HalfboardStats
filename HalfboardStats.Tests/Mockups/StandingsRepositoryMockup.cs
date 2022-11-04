@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using HalfboardStats.Core.JsonMappers.StandingsMappers;
@@ -10,12 +11,11 @@ namespace HalfboardStats.Tests.Mockups
 {
     class StandingsRepositoryMockup : IStandingsRepository
     {
-        IServiceProvider ServiceProvider;
-        IStandingsMapper Standings;
-        public StandingsRepositoryMockup(IServiceProvider serviceProvider, IStandingsMapper standings)
+        public IStandingsMapper Standings { get; set; }
+        public IHttpClientFactory ClientFactory { get; set; }
+        public StandingsRepositoryMockup(IStandingsMapper standings)
         {
-            ServiceProvider = serviceProvider;
-            Standings = (IStandingsMapper)ServiceProvider.GetService(typeof(IStandingsMapper));
+            Standings = standings;
         }
         public Task<IStandingsMapper> GetStandings()
         {
