@@ -9,5 +9,6 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
     {
         IHttpClientFactory ClientFactory { get; set; }
         Task<YearByYearMapper> GetCareerStats(int Id);
+        Task<YearByYearMapper> GetSeasonStats(int Id);
     }
 }
