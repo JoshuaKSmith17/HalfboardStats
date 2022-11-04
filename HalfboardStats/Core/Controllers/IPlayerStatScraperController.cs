@@ -11,6 +11,8 @@ namespace HalfboardStats.Core.Controllers
         IYearByYearStatsAgent Agent { get; set; }
         ICareerStatsBuilder Builder { get; set; }
         IStatsRepository StatsRepository { get; set; }
+
+        Task ScrapePlayerSeasonStats();
         Task ScrapePlayerStats();
     }
 }

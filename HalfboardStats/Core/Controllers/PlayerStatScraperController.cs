@@ -46,5 +46,16 @@ namespace HalfboardStats.Core.Controllers
                 //Thread.Sleep(random.Next(1000, 2000));
             }
         }
+
+        public async Task ScrapePlayerSeasonStats()
+        {
+            List<Player> players = PlayerRepository.GetActivePlayers();
+            foreach (var player in players)
+            {
+                var playerApiStats = await Agent.GetSeasonStats(player.Id);
+                var playerStats = Builder.BuildSeasonStatsAsync(player.Id, playerApiStats);
+                await StatsRepository.CreateCareerStatsAsync(playerStats);
+            }
+        }
     }
 }
