@@ -10,17 +10,13 @@ namespace HalfboardStats.Core.Builders
 {
     public class TeamBuilder : ITeamBuilder
     {
-        public ITeamAgent ServiceAgent { get; set; }
-
-        public TeamBuilder(ITeamAgent agent)
-        {            
-            ServiceAgent = agent;
+        public TeamBuilder()
+        { 
         }
 
-        public async Task<List<Team>> BuildTeams()
+        public List<Team> BuildTeams(List<TeamMapper> teamMapper)
         {
             List<Team> teams = new List<Team>();
-            List<TeamMapper> teamMapper = await ServiceAgent.GetTeams();
 
             foreach (var t in teamMapper)
             {

@@ -8,6 +8,6 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
 {
     public interface ITeamAgent
     {
-        public Task<List<TeamMapper>> GetTeams();
+        public Task<List<TeamMapper>> GetTeamsAsync();
     }
 }
