@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HalfboardStats.Core.JsonMappers.PlayerMappers;
 using HalfboardStats.Core.ObjectRelationalMappers;
 
 namespace HalfboardStats.Core.Builders
 {
     public interface IPlayerbaseBuilder
     {
-        public Task<List<Player>> BuildPlayers();
+        public List<Player> Build(List<RosterPersonMapper> rosterPersons);
 
-        public Task<List<Player>> BuildAllPlayersAsync(string rosterYear);
+        //public Task<List<Player>> BuildAllPlayersAsync(string rosterYear);
     }
 }

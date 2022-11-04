@@ -11,12 +11,12 @@ namespace HalfboardStats.Core.Controllers
 {
     public class PlayerStatScraperController : IPlayerStatScraperController
     {
-        public IActivePlayerLocalRepository PlayerRepository { get; set; }
-        public IYearByYearStatsAgent Agent { get; set; }
+        public IPlayerRepository PlayerRepository { get; set; }
+        public IStatsAgent Agent { get; set; }
         public ICareerStatsBuilder Builder { get; set; }
         public IStatsRepository StatsRepository { get; set; }
 
-        public PlayerStatScraperController(IActivePlayerLocalRepository playerRepository, IYearByYearStatsAgent agent, ICareerStatsBuilder builder, IStatsRepository statsRepository)
+        public PlayerStatScraperController(IPlayerRepository playerRepository, IStatsAgent agent, ICareerStatsBuilder builder, IStatsRepository statsRepository)
         {
             PlayerRepository = playerRepository;
             Agent = agent;
@@ -32,7 +32,7 @@ namespace HalfboardStats.Core.Controllers
              */
             var random = new Random();
 
-            List<Player> players = PlayerRepository.GetPlayers();
+            List<Player> players = PlayerRepository.GetAll();
             players.Reverse();
 
             //Context.RegularSeasonStats.RemoveRange(Context.RegularSeasonStats);
@@ -49,7 +49,8 @@ namespace HalfboardStats.Core.Controllers
 
         public async Task ScrapePlayerSeasonStats()
         {
-            List<Player> players = PlayerRepository.GetActivePlayers();
+            bool isActive = true;
+            List<Player> players = await PlayerRepository.Get(isActive);
             foreach (var player in players)
             {
                 var playerApiStats = await Agent.GetSeasonStats(player.Id);

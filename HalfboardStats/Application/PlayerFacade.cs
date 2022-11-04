@@ -1,4 +1,5 @@
-﻿using HalfboardStats.Core.ObjectRelationalMappers;
+﻿using HalfboardStats.Core.Controllers;
+using HalfboardStats.Core.ObjectRelationalMappers;
 using HalfboardStats.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,15 @@ namespace HalfboardStats.Application
 {
     public class PlayerFacade : IPlayerFacade
     {
-        public IActivePlayerLocalRepository Repository { get; set; }
-        public PlayerFacade(IActivePlayerLocalRepository repository)
+        public IPlayerController Controller{ get; set; }
+        public PlayerFacade(IPlayerController controller)
         {
-            Repository = repository;
+            Controller = controller;
         }
 
-        public List<Player> GetActivePlayers()
+        public async Task<List<Player>> GetActivePlayers()
         {
-            var players = Repository.GetActivePlayers();
+            var players = await Controller.GetActivePlayers();
             return players;
         }
     }

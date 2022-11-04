@@ -7,8 +7,8 @@ namespace HalfboardStats.Core.Controllers
 {
     public interface IPlayerStatScraperController
     {
-        IActivePlayerLocalRepository PlayerRepository { get; set; }
-        IYearByYearStatsAgent Agent { get; set; }
+        IPlayerRepository PlayerRepository { get; set; }
+        IStatsAgent Agent { get; set; }
         ICareerStatsBuilder Builder { get; set; }
         IStatsRepository StatsRepository { get; set; }
 
