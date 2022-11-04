@@ -11,21 +11,19 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
 {
     public class TeamNhlApiAgent : ITeamAgent
     {
-        public IServiceProvider ServiceProvider { get; set; }
+        public IHttpClientFactory Factory { get; set; }
 
-        public TeamNhlApiAgent(IServiceProvider serviceProvider)
+        public TeamNhlApiAgent(IHttpClientFactory factory)
         {
-            ServiceProvider = serviceProvider;
+            Factory = factory;
         }
 
         public async Task<List<TeamMapper>> GetTeams()
         {
             List<TeamMapper> teams = new List<TeamMapper>();
-
-            var factory = (IHttpClientFactory)ServiceProvider.GetService(typeof(IHttpClientFactory));
-            var client = factory.CreateClient();
+            
+            var client = Factory.CreateClient();
             string address = "https://statsapi.web.nhl.com/api/v1/teams/?teamId=";
-
 
             for(int i = 1; i <= 1000; i++)
             {
@@ -40,9 +38,7 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
             responseTask.Wait();
 
             string apiResponse = await responseTask.Result.Content.ReadAsStringAsync();
-            var league = new LeagueTeamsMapper();
-
-            league = JsonConvert.DeserializeObject<LeagueTeamsMapper>(apiResponse);
+            var league = JsonConvert.DeserializeObject<LeagueTeamsMapper>(apiResponse);
 
             foreach (var team in league.Teams)
             {

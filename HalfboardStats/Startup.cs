@@ -17,6 +17,10 @@ using HalfboardStats.Infrastructure.ServiceAgents;
 using HalfboardStats.Infrastructure.Repositories;
 using HalfboardStats.Application;
 using HalfboardStats.Core.Controllers;
+using HalfboardStats.Core.Schedulers;
+using Quartz;
+using Quartz.Impl;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HalfboardStats
 {
@@ -37,7 +41,9 @@ namespace HalfboardStats
 
             services.AddScoped<IStandingsMapper, StandingsMapper>();
             services.AddScoped<IStandings, Standings>();
+            services.AddScoped<IStandingsBuilder, StandingsBuilder>();
             services.AddScoped<IStandingsRepository, StandingsRepository>();
+            services.AddScoped<IStandingsFacade, StandingsFacade>();
             services.AddTransient<ITeamRecord, TeamRecord>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IPlayerbaseBuilder, PlayerbaseBuilder>();
@@ -51,6 +57,26 @@ namespace HalfboardStats
             services.AddScoped<IStatsRepository, StatsRepository>();
             services.AddScoped<IPlayerStatScraperController, PlayerStatScraperController>();
             services.AddScoped<IStatsFacade, StatsFacade>();
+            //services.AddHostedService<QuartzHostedService>();
+            //services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+            //var scheduler = StdSchedulerFactory.GetDefaultScheduler().GetAwaiter().GetResult();
+            //services.AddSingleton(scheduler);
+
+            services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
+
+            services.AddQuartz(q =>
+            {
+                q.UseMicrosoftDependencyInjectionJobFactory();
+                q.ScheduleJob<PlayerJob>(trigger => trigger
+                .WithIdentity("Main Trigger")
+                .StartNow()
+                .WithSimpleSchedule(x => x.WithIntervalInHours(6)
+                .RepeatForever()));
+            });
+
+            services.AddQuartzHostedService();
+
 
             services.AddRazorPages();
             services.AddMvc().AddRazorPagesOptions(opt => {

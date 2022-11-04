@@ -10,14 +10,13 @@ namespace HalfboardStats.Infrastructure.Repositories
 {
     public class StatsRepository : IStatsRepository
     {
-        public IServiceProvider ServiceProvider { get; set; }
         public HalfboardContext Context { get; set; }
-        public StatsRepository(IServiceProvider serviceProvider, HalfboardContext context)
+        public StatsRepository(HalfboardContext context)
         {
-            ServiceProvider = serviceProvider;
             Context = context;
         }
-        public void CreateCareerStats(List<RegularSeasonStats> stats)
+
+        public async Task CreateCareerStatsAsync(List<RegularSeasonStats> stats)
         {
             var savedStatsIQ = from r in Context.RegularSeasonStats
                                where r.PlayerId == stats[0].PlayerId
@@ -27,7 +26,7 @@ namespace HalfboardStats.Infrastructure.Repositories
             {
                 if (savedStatsIQ.Any(saved => saved.Year == stat.Year) == false)
                 {
-                    Context.RegularSeasonStats.Add(stat);
+                    await Context.RegularSeasonStats.AddAsync(stat);
                 }
                 else
                 {
@@ -35,7 +34,13 @@ namespace HalfboardStats.Infrastructure.Repositories
                     {
                         if (stat.Year == statIQ.Year && stat.TeamId != statIQ.TeamId)
                         {
-                            Context.RegularSeasonStats.Add(stat);
+                            await Context.RegularSeasonStats.AddAsync(stat);
+                            break;
+                        }
+                        else if (stat.Year == statIQ.Year)
+                        {
+                            stat.Id = statIQ.Id;
+                            Context.Entry(statIQ).CurrentValues.SetValues(stat);
                             break;
                         }
                     }
@@ -46,8 +51,8 @@ namespace HalfboardStats.Infrastructure.Repositories
                 Context.SaveChanges();
             }
             catch (SqlException) { }
-            //catch (DbUpdateException) { }
         }
+
         public async Task<List<RegularSeasonStats>> GetCurrentStatsAsync(string currentYear)
         {
 

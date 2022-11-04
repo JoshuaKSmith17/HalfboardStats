@@ -9,39 +9,38 @@ namespace HalfboardStats.Infrastructure.Repositories
 {
     public class ActivePlayerLocalRepository : IActivePlayerLocalRepository
     {
-        public IServiceProvider ServiceProvider { get; set; }
+        public IPlayerbaseBuilder Builder { get; set; }
+        public HalfboardContext Context { get; set; }
         public List<Player> Players { get; set; }
 
-        public ActivePlayerLocalRepository(IServiceProvider serviceProvider)
+        public ActivePlayerLocalRepository(IPlayerbaseBuilder builder, HalfboardContext context)
         {
-            ServiceProvider = serviceProvider;
+            Builder = builder;
+            Context = context;
         }
-        public async void CreateActivePlayers(HalfboardContext context)
+        public async Task CreateActivePlayers()
         {
 
-            var builder = (IPlayerbaseBuilder)ServiceProvider.GetService(typeof(IPlayerbaseBuilder));
-            Players = await builder.BuildPlayers();
+            Players = await Builder.BuildPlayers();
 
             //Add or update a record
             for (int i = 0; i < Players.Count; i++)
             {
-                var dbPlayer = context.Players.Find(Players[i].Id);
+                var dbPlayer = Context.Players.Find(Players[i].Id);
                 if (dbPlayer == null)
                 {
-                    context.Players.Add(Players[i]);
+                    Context.Players.Add(Players[i]);
                 }
                 else
                 {
-                    context.Entry(dbPlayer).CurrentValues.SetValues(Players[i]);
+                    Context.Entry(dbPlayer).CurrentValues.SetValues(Players[i]);
                 }
             }
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
-        public async void CreateAllPlayersAsync(HalfboardContext context)
-        {
-            var builder = (IPlayerbaseBuilder)ServiceProvider.GetService(typeof(IPlayerbaseBuilder));
-            
+        public async Task CreateAllPlayersAsync()
+        {     
             string rosterYear;
 
             if (DateTime.Now.Month <= 7)
@@ -56,18 +55,18 @@ namespace HalfboardStats.Infrastructure.Repositories
             while (rosterYear != "19161917")
             {
                 Console.WriteLine(rosterYear);
-                Players = await builder.BuildAllPlayersAsync(rosterYear);
+                Players = await Builder.BuildAllPlayersAsync(rosterYear);
 
                 for (int i = 0; i < Players.Count; i++)
                 {
-                    var dbPlayer = context.Players.Find(Players[i].Id);
+                    var dbPlayer = Context.Players.Find(Players[i].Id);
                     if (dbPlayer == null)
                     {
-                        context.Players.Add(Players[i]);
+                        Context.Players.Add(Players[i]);
                     }
                     else
                     {
-                        context.Entry(dbPlayer).CurrentValues.SetValues(Players[i]);
+                        Context.Entry(dbPlayer).CurrentValues.SetValues(Players[i]);
                     }
                 }
 
@@ -76,14 +75,14 @@ namespace HalfboardStats.Infrastructure.Repositories
 
                 rosterYear = (previousYear).ToString() + currentYear;
             }
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
-        public List<Player> GetActivePlayers(HalfboardContext context)
+        public List<Player> GetActivePlayers()
         {
-            IQueryable<Player> playersIQ = from p in context.Players
+            IQueryable<Player> playersIQ = from p in Context.Players
                                            where p.IsActive == true
-                                           join t in context.Teams on p.TeamId equals t.Id
+                                           join t in Context.Teams on p.TeamId equals t.Id
                                            select new Player
                                            {
                                                Id = p.Id,
@@ -99,7 +98,7 @@ namespace HalfboardStats.Infrastructure.Repositories
 
             //I could use this to get it ansync with Entity Framework 6
             /*
-            var playersDb = await context.Players.Where(p => p.IsActive)
+            var playersDb = await Context.Players.Where(p => p.IsActive)
                                     .Join(context.Teams,
                                         player => player.TeamId,
                                         team => team.TeamId,
@@ -123,9 +122,9 @@ namespace HalfboardStats.Infrastructure.Repositories
             return players;
         }
 
-        public List<Player> GetPlayers(HalfboardContext context)
+        public List<Player> GetPlayers()
         {
-            IQueryable<Player> playersIQ = from p in context.Players                                           
+            IQueryable<Player> playersIQ = from p in Context.Players                                           
                                            select p;
 
             return playersIQ.ToList<Player>();

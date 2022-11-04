@@ -9,15 +9,34 @@ namespace HalfboardStats.Application
 {
     public class StatsFacade : IStatsFacade
     {
-        public IServiceProvider ServiceProvider { get; set; }
-        public HalfboardContext Context { get; set; }
-        public StatsFacade(IServiceProvider serviceProvider, HalfboardContext context)
+        public IStatsRepository StatsRepository { get; set; }
+
+        public StatsFacade(IStatsRepository repository)
         {
-            ServiceProvider = serviceProvider;
-            Context = context;
+            StatsRepository = repository;
         }
 
         public async Task<List<RegularSeasonStats>> GetCurrentStatsAsync()
+        {
+            List<RegularSeasonStats> currentSeasonStats = await GetCurrentResults();
+
+            return currentSeasonStats;
+        }
+
+        public async Task<List<RegularSeasonStats>> GetPaginatedResultsAsync(int currentPage, int pageSize)
+        {
+            List<RegularSeasonStats> currentSeasonStats = await GetCurrentResults();
+
+            return currentSeasonStats.OrderByDescending(s => s.Points).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            var stats = await GetCurrentResults();
+            return stats.Count;
+        }
+
+        private async Task<List<RegularSeasonStats>> GetCurrentResults()
         {
             string currentDate = "";
 
@@ -30,10 +49,7 @@ namespace HalfboardStats.Application
                 currentDate = DateTime.Now.Year.ToString() + (DateTime.Now.Year + 1).ToString();
             }
 
-            var repo = (IStatsRepository)ServiceProvider.GetService(typeof(IStatsRepository));
-            List<RegularSeasonStats> currentSeasonStats = await repo.GetCurrentStatsAsync(currentDate);
-
-            return currentSeasonStats;
+            return await StatsRepository.GetCurrentStatsAsync(currentDate);
         }
     }
 }

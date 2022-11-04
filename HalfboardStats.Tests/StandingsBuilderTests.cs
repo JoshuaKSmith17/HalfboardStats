@@ -17,7 +17,7 @@ namespace HalfboardStats.Tests
     {
         private IServiceCollection _serviceCollection;
         private IServiceProvider _serviceProvider;
-        private StandingsBuilder _builder;
+        private IStandingsBuilder _builder;
         private int _teamId;
 
         [SetUp]
@@ -29,12 +29,11 @@ namespace HalfboardStats.Tests
             _serviceCollection.AddScoped<IStandingsRepository, StandingsRepositoryMockup>();
             _serviceCollection.AddScoped<IStandings, Standings>();
             _serviceCollection.AddScoped<ITeamRecord, TeamRecord>();
+            _serviceCollection.AddScoped<IStandingsBuilder, StandingsBuilder>();
 
             _serviceProvider = _serviceCollection.BuildServiceProvider();
 
-
-            _builder = new StandingsBuilder(_serviceProvider);
-
+            _builder = (IStandingsBuilder)_serviceProvider.GetService(typeof(IStandingsBuilder));
         }
 
         [Test]

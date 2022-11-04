@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HalfboardStats.Core.Builders;
 using HalfboardStats.Core.ObjectRelationalMappers;
 
 namespace HalfboardStats.Infrastructure.Repositories
 {
-    interface IActivePlayerLocalRepository
+    public interface IActivePlayerLocalRepository
     {
-        public void CreateActivePlayers(HalfboardContext context);
-        public List<Player> GetActivePlayers(HalfboardContext context);
-        public void CreateAllPlayersAsync(HalfboardContext context);
-        public List<Player> GetPlayers(HalfboardContext context);
+        public IPlayerbaseBuilder Builder { get; set; }
+        public HalfboardContext Context { get; set; }
+        public Task CreateActivePlayers();
+        public List<Player> GetActivePlayers();
+        public Task CreateAllPlayersAsync();
+        public List<Player> GetPlayers();
     }
 }

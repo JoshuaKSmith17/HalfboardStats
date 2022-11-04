@@ -8,8 +8,7 @@ namespace HalfboardStats.Core.Builders
 {
     public interface ICareerStatsBuilder
     {
-        IServiceProvider ServiceProvider { get; set; }
-
         List<RegularSeasonStats> BuildCareerStatsAsync(int Id, YearByYearMapper playerStats);
+        List<RegularSeasonStats> BuildSeasonStatsAsync(int Id, YearByYearMapper playerStats);
     }
 }
