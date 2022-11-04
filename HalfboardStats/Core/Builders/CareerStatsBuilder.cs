@@ -16,8 +16,6 @@ namespace HalfboardStats.Core.Builders
 
         public List<RegularSeasonStats> BuildCareerStatsAsync(int Id, YearByYearMapper playerStats)
         {
-            // var agent = (IYearByYearStatsAgent)ServiceProvider.GetService(typeof(IYearByYearStatsAgent));
-            // var playerStats = await agent.GetCareerStats(Id);
             List<RegularSeasonStats> regularSeasonStats = new List<RegularSeasonStats>();
 
             foreach(var splits in playerStats.Stats[0].Splits)
@@ -25,45 +23,60 @@ namespace HalfboardStats.Core.Builders
                 // Checks if the league is the NHL
                 if(splits.League.Id == 133)
                 {
-                    // Commented lines are not available in this GET request
-                    RegularSeasonStats playerSeason = new RegularSeasonStats();
-                    playerSeason.PlayerId = Id;
-                    playerSeason.TeamId = splits.Team.Id;
-
-                    playerSeason.Assists = splits.Stat.Assists;
-                    playerSeason.EvenStrengthTimeOnIce = splits.Stat.EvenStrengthTimeOnIce;
-                    playerSeason.EvenTimeOnIcePerGame = splits.Stat.EvenTimeOnIcePerGame;
-                    playerSeason.FaceOffPct = splits.Stat.FaceOffPct;
-                    playerSeason.Games = splits.Stat.Games;
-                    playerSeason.GameWinningGoals = splits.Stat.GameWinningGoals;
-                    playerSeason.Goals = splits.Stat.Goals;
-                    playerSeason.Hits = splits.Stat.Hits;
-                    playerSeason.OverTimeGoals = splits.Stat.OverTimeGoals;
-                    playerSeason.PenaltyMinutes = splits.Stat.PenaltyMinutes;
-                    playerSeason.PlusMinus = splits.Stat.PlusMinus;
-                    playerSeason.Points = splits.Stat.Points;
-                    playerSeason.PowerPlayGoals = splits.Stat.PowerPlayGoals;
-                    playerSeason.PowerPlayPoints = splits.Stat.PowerPlayPoints;
-                    playerSeason.PowerPlayTimeOnIce = splits.Stat.PowerPlayTimeOnIce;
-                    // playerSeason.PowerPlayTimeOnIcePerGame = splits.Stat.PowerPlayTimeOnIcePerGame;
-                    playerSeason.Shifts = splits.Stat.Shifts;
-                    playerSeason.ShortHandedGoals = splits.Stat.ShortHandedGoals;
-                    playerSeason.ShortHandedPoints = splits.Stat.ShortHandedPoints;
-                    playerSeason.ShortHandedTimeOnIce = splits.Stat.ShortHandedTimeOnIce;
-                    // playerSeason.ShortHandedTimeOnIcePerGame = splits.Stat.ShortHandedTimeOnIcePerGame;
-                    playerSeason.ShotPct = splits.Stat.ShotPct;
-                    playerSeason.Shots = splits.Stat.Shots;
-                    playerSeason.ShotsBlocked = splits.Stat.Blocked;
-                    // playerSeason.TimeOnIcePerGame = splits.Stat.TimeOnIcePerGame;
-                    playerSeason.Year = splits.Season;
-
+                    RegularSeasonStats playerSeason = MapStats(Id, splits);
                     regularSeasonStats.Add(playerSeason);
                 }
+            }
+            return regularSeasonStats;            
+        }
+
+        public List<RegularSeasonStats> BuildSeasonStatsAsync(int Id, YearByYearMapper playerStats)
+        {
+            List<RegularSeasonStats> regularSeasonStats = new List<RegularSeasonStats>();
+
+            foreach (var splits in playerStats.Stats[0].Splits)
+            {     
+                RegularSeasonStats playerSeason = MapStats(Id, splits);
+                regularSeasonStats.Add(playerSeason);            
 
             }
-
             return regularSeasonStats;
-            
+        }
+
+        private RegularSeasonStats MapStats(int Id, YearByYearStatLineItem statLineItem)
+        {
+            RegularSeasonStats playerSeason = new RegularSeasonStats();
+            playerSeason.PlayerId = Id;
+            playerSeason.TeamId = statLineItem.Team.Id;
+
+            playerSeason.Assists = statLineItem.Stat.Assists;
+            playerSeason.EvenStrengthTimeOnIce = statLineItem.Stat.EvenStrengthTimeOnIce;
+            playerSeason.EvenTimeOnIcePerGame = statLineItem.Stat.EvenTimeOnIcePerGame;
+            playerSeason.FaceOffPct = statLineItem.Stat.FaceOffPct;
+            playerSeason.Games = statLineItem.Stat.Games;
+            playerSeason.GameWinningGoals = statLineItem.Stat.GameWinningGoals;
+            playerSeason.Goals = statLineItem.Stat.Goals;
+            playerSeason.Hits = statLineItem.Stat.Hits;
+            playerSeason.OverTimeGoals = statLineItem.Stat.OverTimeGoals;
+            playerSeason.PenaltyMinutes = statLineItem.Stat.PenaltyMinutes;
+            playerSeason.PlusMinus = statLineItem.Stat.PlusMinus;
+            playerSeason.Points = statLineItem.Stat.Points;
+            playerSeason.PowerPlayGoals = statLineItem.Stat.PowerPlayGoals;
+            playerSeason.PowerPlayPoints = statLineItem.Stat.PowerPlayPoints;
+            playerSeason.PowerPlayTimeOnIce = statLineItem.Stat.PowerPlayTimeOnIce;
+            // playerSeason.PowerPlayTimeOnIcePerGame = splits.Stat.PowerPlayTimeOnIcePerGame;
+            playerSeason.Shifts = statLineItem.Stat.Shifts;
+            playerSeason.ShortHandedGoals = statLineItem.Stat.ShortHandedGoals;
+            playerSeason.ShortHandedPoints = statLineItem.Stat.ShortHandedPoints;
+            playerSeason.ShortHandedTimeOnIce = statLineItem.Stat.ShortHandedTimeOnIce;
+            // playerSeason.ShortHandedTimeOnIcePerGame = splits.Stat.ShortHandedTimeOnIcePerGame;
+            playerSeason.ShotPct = statLineItem.Stat.ShotPct;
+            playerSeason.Shots = statLineItem.Stat.Shots;
+            playerSeason.ShotsBlocked = statLineItem.Stat.Blocked;
+            // playerSeason.TimeOnIcePerGame = splits.Stat.TimeOnIcePerGame;
+            playerSeason.Year = statLineItem.Season;
+
+            return playerSeason;
         }
     }
 }

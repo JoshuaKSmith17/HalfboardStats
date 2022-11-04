@@ -9,5 +9,6 @@ namespace HalfboardStats.Core.Builders
     public interface ICareerStatsBuilder
     {
         List<RegularSeasonStats> BuildCareerStatsAsync(int Id, YearByYearMapper playerStats);
+        List<RegularSeasonStats> BuildSeasonStatsAsync(int Id, YearByYearMapper playerStats);
     }
 }
