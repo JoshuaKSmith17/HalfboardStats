@@ -10,12 +10,12 @@ namespace HalfboardStats.Infrastructure.Repositories
 {
     public class StatsRepository : IStatsRepository
     {
-
         public HalfboardContext Context { get; set; }
         public StatsRepository(HalfboardContext context)
         {
             Context = context;
         }
+
         public async Task CreateCareerStatsAsync(List<RegularSeasonStats> stats)
         {
             var savedStatsIQ = from r in Context.RegularSeasonStats
@@ -35,6 +35,12 @@ namespace HalfboardStats.Infrastructure.Repositories
                         if (stat.Year == statIQ.Year && stat.TeamId != statIQ.TeamId)
                         {
                             await Context.RegularSeasonStats.AddAsync(stat);
+                            break;
+                        }
+                        else if (stat.Year == statIQ.Year)
+                        {
+                            stat.Id = statIQ.Id;
+                            Context.Entry(statIQ).CurrentValues.SetValues(stat);
                             break;
                         }
                     }
