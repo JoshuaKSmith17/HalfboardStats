@@ -7,7 +7,7 @@ using HalfboardStats.Core.JsonMappers.PlayerMappers;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
-    public interface IPlayerRepository
+    public interface IPlayerAgent
     {
         public IHttpClientFactory Factory { get; set; }
         public Task<List<RosterPersonMapper>> GetActivePlayers();

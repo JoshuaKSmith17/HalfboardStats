@@ -4,7 +4,7 @@ using HalfboardStats.Core.JsonMappers.StandingsMappers;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
-    public interface IStandingsRepository
+    public interface IStandingsAgent
     {
         IStandingsMapper Standings { get; set; }
         IHttpClientFactory ClientFactory { get; set; }

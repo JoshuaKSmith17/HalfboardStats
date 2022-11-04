@@ -11,12 +11,12 @@ using HalfboardStats.Core.JsonMappers.StandingsMappers;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
-    public class StandingsRepository : IStandingsRepository
+    public class StandingNhlApiAgent : IStandingsAgent
     {
         public IStandingsMapper Standings { get; set; }
         public IHttpClientFactory ClientFactory { get; set; }
 
-        public StandingsRepository(IStandingsMapper standings, IHttpClientFactory clientFactory)
+        public StandingNhlApiAgent(IStandingsMapper standings, IHttpClientFactory clientFactory)
         {
             Standings = standings;
             ClientFactory = clientFactory;

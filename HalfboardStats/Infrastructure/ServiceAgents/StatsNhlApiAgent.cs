@@ -1,18 +1,15 @@
 ﻿using HalfboardStats.Core.JsonMappers.PlayerMappers;
 using HalfboardStats.Core.JsonMappers.StatsMappers;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
-    public class YearByYearStatsAgent : IYearByYearStatsAgent
+    public class StatsNhlApiAgent : IStatsAgent
     {
         public IHttpClientFactory ClientFactory { get; set; }
-        public YearByYearStatsAgent(IHttpClientFactory clientFactory)
+        public StatsNhlApiAgent(IHttpClientFactory clientFactory)
         {
             ClientFactory = clientFactory;
         }

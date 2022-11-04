@@ -7,23 +7,21 @@ using HalfboardStats.Core.Builders;
 
 namespace HalfboardStats.Infrastructure.Repositories
 {
-    public class TeamLocalRepository : ITeamLocalRepository
+    public class TeamRepository : ITeamRepository
     {
         public ITeamBuilder Builder { get; set; }
         public HalfboardContext Context { get; set; }
         public List<Team> Teams { get; set; }
 
-        public TeamLocalRepository(ITeamBuilder builder, HalfboardContext context)
+        public TeamRepository(ITeamBuilder builder, HalfboardContext context)
         {
             Builder = builder;
             Context = context;
         }
 
-        public async void CreateTeams()
+        public async Task CreateTeams(List<Team> teams)
         {
-            Teams = await Builder.BuildTeams();
-
-            foreach (var team in Teams)
+            foreach (var team in teams)
             {
                 var dbTeam = Context.Teams.Find(team.Id);
                 if (dbTeam == null)
@@ -35,7 +33,7 @@ namespace HalfboardStats.Infrastructure.Repositories
                     Context.Entry(dbTeam).CurrentValues.SetValues(team);
                 }
             }
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
     }
 }
