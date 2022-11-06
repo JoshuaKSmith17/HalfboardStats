@@ -21,6 +21,7 @@ using HalfboardStats.Core.Schedulers;
 using Quartz;
 using Quartz.Impl;
 using Microsoft.AspNetCore.Mvc;
+using HalfboardStats.Core;
 
 namespace HalfboardStats
 {
@@ -50,7 +51,7 @@ namespace HalfboardStats
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<ITeamAgent, TeamNhlApiAgent>();
             services.AddScoped<ITeamBuilder, TeamBuilder>();
-            services.AddScoped<Infrastructure.Repositories.ITeamRepository, TeamRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IPlayerFacade, PlayerFacade>();
             services.AddScoped<IStatsAgent, StatsNhlApiAgent>();
             services.AddScoped<ICareerStatsBuilder, CareerStatsBuilder>();
@@ -59,6 +60,8 @@ namespace HalfboardStats
             services.AddScoped<IStatsFacade, StatsFacade>();
             services.AddScoped<IPlayerController, PlayerController>();
             services.AddScoped<ITeamController, TeamController>();
+            services.AddScoped<ISeasonYear, SeasonYear>();
+            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
             services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
 
