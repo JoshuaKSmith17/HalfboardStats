@@ -70,8 +70,8 @@ namespace HalfboardStats
                 q.UseMicrosoftDependencyInjectionJobFactory();
                 q.ScheduleJob<PlayerJob>(trigger => trigger
                 .WithIdentity("Main Trigger")
-                .StartNow()
-                .WithSimpleSchedule(x => x.WithIntervalInHours(6)
+                .StartAt(DateBuilder.FutureDate(1, IntervalUnit.Hour))
+                .WithSimpleSchedule(x => x.WithIntervalInHours(12)
                 .RepeatForever()));
             });
 
