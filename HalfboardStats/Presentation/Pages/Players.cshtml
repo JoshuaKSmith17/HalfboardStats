@@ -4,40 +4,48 @@
 }
 <div class="container text-white">
     <h1>Players</h1>
-    <div>
-        <ul class="nav">
 
-            <li class="nav-item">
-                <a class="nav-link btn btn-secondary mx-2" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage - 1)">Previous</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link btn btn-secondary mx-2" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage + 1)">Next</a>
-            </li>
-        </ul>
-
+    <div class="row mb-3">
+        <div class="col-sm">
+            <a class="nav-link btn btn-secondary border-light" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage - 1)">Previous</a>
+        </div>
+        <div class="col-sm-8">
+            <div class="row justify-content-center align-items-center">
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link text-light bg-secondary" asp-page="./Players" asp-route-currentPage="@i">@i</a>
+                        </li>
+                       
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm">
+            <a class="nav-link btn btn-secondary mx-2 border-light" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage + 1)">Next</a>
+        </div>
     </div>
+
     <table class="table table-dark table-sm table-hover">
         <thead>
             <tr class="text-white">
-                <th>
-                    ID
-                </th>
-                <th>
+                <th class="col-sm-2">
                     First Name
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Last Name
                 </th>
-                <th>
+                <th class="col-sm-1">
                     Games
                 </th>
-                <th>
+                <th class="col-sm-1">
                     Goals
                 </th>
-                <th>
+                <th class="col-sm-1">
                     Assists
                 </th>
-                <th>
+                <th class="col-sm-1">
                     Points
                 </th>
             </tr>
@@ -45,9 +53,6 @@
         @foreach (var Skater in Model.SkaterStats)
         {
             <tr class="text-white">
-                <td>
-                    @Html.DisplayFor(modelPlayer => Skater.Id)
-                </td>
 
                 <td>
                     @Html.DisplayFor(modelPlayer => Skater.Player.FirstName)
