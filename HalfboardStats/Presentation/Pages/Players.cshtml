@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{sortby=Points descending}"
 @model HalfboardStats.Presentation.Pages.PlayersModel
 @{
 }
@@ -7,15 +7,25 @@
 
     <div class="row mb-3">
         <div class="col-sm">
-            <a class="nav-link btn btn-secondary border-light" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage - 1)">Previous</a>
+            <a 
+                class="nav-link btn btn-secondary border-light" 
+                asp-page="./Players" 
+                asp-route-currentPage="@(Model.CurrentPage - 1)">
+                Previous
+            </a>
         </div>
         <div class="col-sm-8">
             <div class="row justify-content-center align-items-center">
                 <ul class="pagination">
                     @for (int i = 1; i <= Model.TotalPages; i++)
                     {
-                        <li class="page-item">
-                            <a class="page-link text-light bg-secondary" asp-page="./Players" asp-route-currentPage="@i">@i</a>
+                        <li class="page-item @(i == Model.CurrentPage ? "active bg-primary" : "")">
+                            <a 
+                                class="page-link text-light @(i == Model.CurrentPage ? "bg-dark" : "bg-secondary")" 
+                                asp-page="./Players" 
+                                asp-route-currentPage="@i">
+                                @i
+                            </a>
                         </li>
                        
                     }
@@ -23,30 +33,113 @@
             </div>
         </div>
         <div class="col-sm">
-            <a class="nav-link btn btn-secondary mx-2 border-light" asp-page="./Players" asp-route-currentPage="@(Model.CurrentPage + 1)">Next</a>
+            <a 
+                class="nav-link btn btn-secondary mx-2 border-light" 
+                asp-page="./Players" 
+                asp-route-currentPage="@(Model.CurrentPage + 1)">
+                Next
+            </a>
         </div>
     </div>
 
-    <table class="table table-dark table-sm table-hover">
-        <thead>
+    <table class="table table-dark table-sm table-hover table-borderless table-striped">
+        <thead class="border-bottom">
             <tr class="text-white">
-                <th class="col-sm-2">
-                    First Name
+                <th class="col-sm-2" style="font-size: 20px">
+                    <a 
+                        asp-page="./Players" 
+                        class="text-light font-weight-bold" 
+                        asp-route-sortby="@(RouteData.Values["sortby"].ToString() != "Player.FirstName" ? "Player.FirstName" : "Player.FirstName descending")">
+                        First Name
+                        @if (RouteData.Values["sortby"].ToString() == "Player.FirstName")
+                        {
+                            @Html.Raw(Model.UpArrow);
+                        }
+                        else if (RouteData.Values["sortby"].ToString() == "Player.FirstName descending")
+                        {
+                            @Html.Raw(Model.DownArrow);
+                        }
+                    </a>
                 </th>
-                <th class="col-sm-2">
-                    Last Name
+                <th class="col-sm-2" style="font-size: 20px">
+                    <a 
+                        asp-page="./Players" 
+                        class="text-light font-weight-bold" 
+                        asp-route-sortby="@(RouteData.Values["sortby"].ToString() != "Player.LastName" ? "Player.LastName" : "Player.LastName descending")">
+                        Last Name
+                        @if (RouteData.Values["sortby"].ToString() == "Player.LastName")
+                        {
+                            @Html.Raw(Model.UpArrow);
+                        }
+                        else if (RouteData.Values["sortby"].ToString() == "Player.LastName descending")
+                        {
+                            @Html.Raw(Model.DownArrow);
+                        }
+                    </a>
                 </th>
-                <th class="col-sm-1">
-                    Games
+                <th class="col-sm-1" style="font-size: 20px">
+                    <a 
+                        asp-page="./Players" 
+                        class="text-light font-weight-bold" 
+                        asp-route-sortby="@(RouteData.Values["sortby"].ToString() != "Games descending" ? "Games descending" : "Games")">
+                        Games
+                        @if (RouteData.Values["sortby"].ToString() == "Games")
+                        {
+                            @Html.Raw(Model.UpArrow);
+                        }
+                        else if (RouteData.Values["sortby"].ToString() == "Games descending")
+                        {
+                            @Html.Raw(Model.DownArrow);
+                        }
+                    </a>
                 </th>
-                <th class="col-sm-1">
-                    Goals
+                <th class="col-sm-1" style="font-size: 20px">
+                    <a 
+                        asp-page="./Players" class="text-light font-weight-bold" 
+                        asp-route-sortby="@(RouteData.Values["sortby"].ToString() != "Goals descending" ? "Goals descending" : "Goals")">
+                        Goals
+                        @if (RouteData.Values["sortby"].ToString() == "Goals")
+                        {
+                            @Html.Raw(Model.UpArrow);
+                        }
+                        else if (RouteData.Values["sortby"].ToString() == "Goals descending")
+                        {
+                            @Html.Raw(Model.DownArrow);
+                        }
+                    </a>
                 </th>
-                <th class="col-sm-1">
-                    Assists
+                <th class="col-sm-1" style="font-size: 20px">
+                    <a 
+                        asp-page="./Players" 
+                        class="text-light font-weight-bold" 
+                        asp-route-sortby="@(RouteData.Values["sortby"].ToString() != "Assists descending" ? "Assists descending" : "Assists")">
+                        Assists
+                        @if (RouteData.Values["sortby"].ToString() == "Assists")
+                        {
+                            @Html.Raw(Model.UpArrow);
+                        }
+                        else if (RouteData.Values["sortby"].ToString() == "Assists descending")
+                        {
+                            @Html.Raw(Model.DownArrow);
+                        }
+                    </a>
                 </th>
-                <th class="col-sm-1">
-                    Points
+                <th class="col-sm-1" style="font-size: 20px">
+                    <a 
+                        asp-page="./Players" 
+                        class="text-light font-weight-bold" 
+                        asp-route-sortby="@(RouteData.Values["sortby"].ToString() != "Points descending" ? "Points descending" : "Points")">
+                        Points 
+                        
+                        @if (RouteData.Values["sortby"].ToString() == "Points")
+                        {
+                            @Html.Raw(Model.UpArrow);
+                        }
+                        else if (RouteData.Values["sortby"].ToString() == "Points descending")
+                        {
+                            @Html.Raw(Model.DownArrow);
+                        }
+                    </a>
                 </th>
             </tr>
         </thead>
@@ -54,23 +147,32 @@
         {
             <tr class="text-white">
 
-                <td>
-                    @Html.DisplayFor(modelPlayer => Skater.Player.FirstName)
+                <td class="py-0">
+                    <a class="text-light"
+                        asp-page="./Players"
+                        asp-route-Id="@Skater.Player.Id)">
+                        @Html.DisplayFor(modelPlayer => Skater.Player.FirstName)
+                    </a>
                 </td>
 
-                <td>
-                    @Html.DisplayFor(modelPlayer => Skater.Player.LastName)
+                <td class="py-0">
+                    <a 
+                        class="text-light" 
+                        asp-page="./Players"
+                        asp-route-Id="@Skater.Player.Id)">
+                        @Html.DisplayFor(modelPlayer => Skater.Player.LastName)
+                    </a>
                 </td>
-                <td>
+                <td class="py-0">
                     @Html.DisplayFor(modelPlayer => Skater.Games)
                 </td>
-                <td>
+                <td class="py-0">
                     @Html.DisplayFor(modelPlayer => Skater.Goals)
                 </td>
-                <td>
+                <td class="py-0">
                     @Html.DisplayFor(modelPlayer => Skater.Assists)
                 </td>
-                <td>
+                <td class="py-0">
                     @Html.DisplayFor(modelPlayer => Skater.Points)
                 </td>
             </tr>
