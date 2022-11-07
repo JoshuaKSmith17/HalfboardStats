@@ -9,7 +9,7 @@ using HalfboardStats.Infrastructure.ServiceAgents;
 
 namespace HalfboardStats.Tests.Mockups
 {
-    class StandingsRepositoryMockup : IStandingsRepository
+    class StandingsRepositoryMockup : IStandingsAgent
     {
         public IStandingsMapper Standings { get; set; }
         public IHttpClientFactory ClientFactory { get; set; }

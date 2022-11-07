@@ -1,50 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HalfboardStats.Core.JsonMappers.PlayerMappers;
 using HalfboardStats.Core.ObjectRelationalMappers;
-using HalfboardStats.Infrastructure.ServiceAgents;
 
 namespace HalfboardStats.Core.Builders
 {
     public class PlayerbaseBuilder : IPlayerbaseBuilder
     {
-        public IPlayerRepository Repository { get; set; }
 
-        public PlayerbaseBuilder(IPlayerRepository repository)
-        {
-            Repository = repository;
+        public PlayerbaseBuilder()
+        { 
         }
-        public async Task<List<Player>> BuildPlayers()
+        public List<Player> Build(List<RosterPersonMapper> rosterPersons)
         {
             List<Player> players = new List<Player>();
-            List<RosterPersonMapper> playerMapper = await Repository.GetActivePlayers();
 
-            for (int i = 0; i < playerMapper.Count; i++)
+            foreach (var rosterPerson in rosterPersons)
             {
-                var person = AdaptPlayer(playerMapper[i]);
+                var person = MapPlayer(rosterPerson);
                 players.Add(person);
             }
 
             return players;
         }
 
-        public async Task<List<Player>> BuildAllPlayersAsync(string rosterYear)
-        {
-            List<Player> players = new List<Player>();
-            List<RosterPersonMapper> playerMappers = await Repository.GetAllPlayersAsync(rosterYear);
-
-            foreach (var playerMapper in playerMappers)
-            {
-                var person = AdaptPlayer(playerMapper);
-                players.Add(person);
-            }
-
-            return players;
-        }
-
-        private Player AdaptPlayer(RosterPersonMapper playerMapper)
+        private Player MapPlayer(RosterPersonMapper playerMapper)
         {
             var person = new Player();
             person.Id = playerMapper.Person.Id;

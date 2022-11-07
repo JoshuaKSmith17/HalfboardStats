@@ -6,8 +6,8 @@ using HalfboardStats.Core.ObjectRelationalMappers;
 
 namespace HalfboardStats.Infrastructure.Repositories
 {
-    public interface ITeamLocalRepository
+    public interface ITeamRepository
     {
-        public void CreateTeams();
+        Task CreateTeams(List<Team> teams);
     }
 }

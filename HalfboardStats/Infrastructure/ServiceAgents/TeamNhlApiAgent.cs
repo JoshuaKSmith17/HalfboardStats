@@ -18,7 +18,7 @@ namespace HalfboardStats.Infrastructure.ServiceAgents
             Factory = factory;
         }
 
-        public async Task<List<TeamMapper>> GetTeams()
+        public async Task<List<TeamMapper>> GetTeamsAsync()
         {
             List<TeamMapper> teams = new List<TeamMapper>();
             

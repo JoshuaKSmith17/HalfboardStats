@@ -26,7 +26,7 @@ namespace HalfboardStats.Tests
             var standingsMock = new StandingsMapperMock();
             _serviceCollection = new ServiceCollection();
             _serviceCollection.AddSingleton<IStandingsMapper>(standingsMock);
-            _serviceCollection.AddScoped<IStandingsRepository, StandingsRepositoryMockup>();
+            _serviceCollection.AddScoped<IStandingsAgent, StandingsRepositoryMockup>();
             _serviceCollection.AddScoped<IStandings, Standings>();
             _serviceCollection.AddScoped<ITeamRecord, TeamRecord>();
             _serviceCollection.AddScoped<IStandingsBuilder, StandingsBuilder>();

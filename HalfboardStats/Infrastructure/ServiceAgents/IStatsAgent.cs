@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
-    public interface IYearByYearStatsAgent
+    public interface IStatsAgent
     {
         IHttpClientFactory ClientFactory { get; set; }
         Task<YearByYearMapper> GetCareerStats(int Id);

@@ -4,9 +4,7 @@ namespace HalfboardStats.Core.ObjectRelationalMappers
 {
     public class HalfboardContext : DbContext
     {
-        public HalfboardContext(DbContextOptions<HalfboardContext> options)
-            : base(options) { }
-
+        public HalfboardContext(DbContextOptions<HalfboardContext> options) : base(options) { }
         public HalfboardContext() { }
 
         public DbSet<Player> Players { get; set; }
@@ -19,6 +17,5 @@ namespace HalfboardStats.Core.ObjectRelationalMappers
             modelBuilder.Entity<Team>().ToTable("Team");
             modelBuilder.Entity<RegularSeasonStats>().ToTable("RegularSeasonStats");
         }
-
     }
 }

@@ -8,7 +8,7 @@ namespace HalfboardStats.Core.Builders
 {
     public interface IStandingsBuilder
     {
-        IStandingsRepository Repository { get; set; }
+        IStandingsAgent Repository { get; set; }
         IStandings Standings { get; set; }
         IStandingsMapper StandingsMapper { get; set; }
 

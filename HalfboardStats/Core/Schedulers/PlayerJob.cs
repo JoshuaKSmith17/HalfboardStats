@@ -8,25 +8,25 @@ namespace HalfboardStats.Core.Schedulers
 {
     public class PlayerJob : IJob
     {
-        public IActivePlayerLocalRepository Repository { get; set; }
-        public ITeamLocalRepository TeamLocalRepository { get; set; }
+        public IPlayerController PlayerController { get; set; }
+        public ITeamController TeamController { get; set; }
         public IPlayerStatScraperController Controller { get; set; }
         public IServiceProvider ServiceProvider { get; set; }
-        public PlayerJob(IActivePlayerLocalRepository repository,
-                            ITeamLocalRepository teamLocalRepository,
+        public PlayerJob(IPlayerController playerController,
+                            ITeamController teamController,
                             IPlayerStatScraperController controller,
                             IServiceProvider serviceProvider)
         {
-            Repository = repository;
-            TeamLocalRepository = teamLocalRepository;
+            PlayerController = playerController;
+            TeamController = teamController;
             Controller = controller;
             ServiceProvider = serviceProvider;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
-            TeamLocalRepository.CreateTeams();
-            await Repository.CreateActivePlayers();
+            await TeamController.CreateTeamsAsync();
+            await PlayerController.CreateActivePlayers();
             await Controller.ScrapePlayerSeasonStats();
         }
     }

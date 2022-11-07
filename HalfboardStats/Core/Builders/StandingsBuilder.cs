@@ -13,9 +13,9 @@ namespace HalfboardStats.Core.Builders
         IServiceProvider ServiceProvider;
         public IStandings Standings { get; set; }
         public IStandingsMapper StandingsMapper { get; set; }
-        public IStandingsRepository Repository { get; set; }
+        public IStandingsAgent Repository { get; set; }
 
-        public StandingsBuilder(IServiceProvider serviceProvider, IStandings standings, IStandingsMapper mapper, IStandingsRepository repository)
+        public StandingsBuilder(IServiceProvider serviceProvider, IStandings standings, IStandingsMapper mapper, IStandingsAgent repository)
         {
             ServiceProvider = serviceProvider;
             Standings = standings;

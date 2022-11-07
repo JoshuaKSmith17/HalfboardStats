@@ -10,11 +10,11 @@ using HalfboardStats.Core.JsonMappers;
 
 namespace HalfboardStats.Infrastructure.ServiceAgents
 {
-    public class PlayerRepository : IPlayerRepository
+    public class PlayerNhlApiAgent : IPlayerAgent
     {
         public IHttpClientFactory Factory { get; set; }
 
-        public PlayerRepository(IHttpClientFactory factory)
+        public PlayerNhlApiAgent(IHttpClientFactory factory)
         {
             Factory = factory;
         }

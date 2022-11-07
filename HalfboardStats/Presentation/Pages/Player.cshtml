@@ -1,0 +1,78 @@
+﻿@page "{Id:int}"
+@model HalfboardStats.Presentation.Pages.PlayerModel
+@{
+}
+<div class="container text-white">   
+    <h1>
+        @Html.DisplayFor(p => Model.Player.FirstName) 
+        @Html.DisplayFor(p => Model.Player.LastName)
+    </h1>
+</div>
+<div class="container text-white">
+    <table class="table table-dark table-borderless">
+        <tr>
+            <td>Team:</td>
+            <td>@Html.DisplayFor(p => Model.Player.CurrentTeam.Name)</td>
+            <td>Height:</td>
+            <td>@Html.DisplayFor(p => Model.Player.Height)</td
+        </tr>
+        <tr>
+            <td>Birth Date:</td>
+            <td>@Html.DisplayFor(p => Model.Player.BirthDate)</td>
+            <td>Weight:</td>
+            <td>@Html.DisplayFor(p => Model.Player.Weight) lbs</td>
+        </tr>
+        <tr>
+            <td>Age:</td>
+            <td>@Html.DisplayFor(p => Model.Player.CurrentAge)</td>
+        </tr>
+    </table>
+</div>
+
+<div class="container text-white">
+    <h3>Career Statistics</h3>
+    <table class="table table-dark table-sm table-borderless table-striped">
+    <thead>
+        <tr>
+            <th>
+                Year
+            </th>
+            <th>
+                Games
+            </th>
+            <th>
+                Goals
+            </th>
+            <th>
+                Assists
+            </th>
+            <th>
+                Points
+            </th>
+        </tr>
+    </thead>
+    @foreach (var season in Model.Player.RegularSeasonStats)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(p => season.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(p => season.Games)
+            </td>
+            <td>
+                @Html.DisplayFor(p => season.Goals)
+            </td>
+            <td>
+                @Html.DisplayFor(p => season.Assists)
+            </td>
+            <td>
+                @Html.DisplayFor(p => season.Points)
+            </td>
+        </tr>
+    }
+    </table>
+
+
+</div>
+

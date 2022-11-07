@@ -1,5 +1,7 @@
-﻿using HalfboardStats.Core.ObjectRelationalMappers;
+﻿using HalfboardStats.Core;
+using HalfboardStats.Core.ObjectRelationalMappers;
 using HalfboardStats.Infrastructure.Repositories;
+using System.Linq.Dynamic.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,12 @@ namespace HalfboardStats.Application
     public class StatsFacade : IStatsFacade
     {
         public IStatsRepository StatsRepository { get; set; }
+        public ISeasonYear Year { get; set; }
 
-        public StatsFacade(IStatsRepository repository)
+        public StatsFacade(IStatsRepository repository, ISeasonYear year)
         {
             StatsRepository = repository;
+            Year = year;
         }
 
         public async Task<List<RegularSeasonStats>> GetCurrentStatsAsync()
@@ -30,6 +34,12 @@ namespace HalfboardStats.Application
             return currentSeasonStats.OrderByDescending(s => s.Points).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
         }
 
+        public async Task<List<RegularSeasonStats>> GetPaginatedResultsAsync(int currentPage, int pageSize, string sortBy)
+        {
+            List<RegularSeasonStats> currentSeasonStats = await GetCurrentResults();
+            return currentSeasonStats.AsQueryable().OrderBy(sortBy).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+        }
+
         public async Task<int> GetCountAsync()
         {
             var stats = await GetCurrentResults();
@@ -38,18 +48,7 @@ namespace HalfboardStats.Application
 
         private async Task<List<RegularSeasonStats>> GetCurrentResults()
         {
-            string currentDate = "";
-
-            if (DateTime.Now.Month <= 9)
-            {
-                currentDate = (DateTime.Now.Year - 1).ToString() + DateTime.Now.Year.ToString();
-            }
-            else
-            {
-                currentDate = DateTime.Now.Year.ToString() + (DateTime.Now.Year + 1).ToString();
-            }
-
-            return await StatsRepository.GetCurrentStatsAsync(currentDate);
+            return await StatsRepository.GetCurrentStatsAsync(Year.Year);
         }
     }
 }
