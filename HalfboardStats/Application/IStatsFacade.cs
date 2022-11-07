@@ -12,5 +12,6 @@ namespace HalfboardStats.Application
         Task<List<RegularSeasonStats>> GetCurrentStatsAsync();
         Task<List<RegularSeasonStats>> GetPaginatedResultsAsync(int currentPage, int pageSize);
         Task<int> GetCountAsync();
+        Task<List<RegularSeasonStats>> GetPaginatedResultsAsync(int currentPage, int pageSize, string sortBy);
     }
 }
