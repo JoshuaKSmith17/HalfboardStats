@@ -7,5 +7,6 @@ namespace HalfboardStats.Application
     public interface IPlayerFacade
     {
         Task<List<Player>> GetActivePlayers();
+        Player GetPlayer(int Id);
     }
 }

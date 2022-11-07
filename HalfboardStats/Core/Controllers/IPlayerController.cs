@@ -15,5 +15,6 @@ namespace HalfboardStats.Core.Controllers
 
         Task<List<Player>> GetActivePlayers();
         Task CreateActivePlayers();
+        Player Get(int Id);
     }
 }

@@ -21,5 +21,10 @@ namespace HalfboardStats.Application
             var players = await Controller.GetActivePlayers();
             return players;
         }
+
+        public Player GetPlayer(int Id)
+        {
+            return Controller.Get(Id);
+        }
     }
 }

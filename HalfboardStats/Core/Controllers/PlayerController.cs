@@ -46,5 +46,10 @@ namespace HalfboardStats.Core.Controllers
             }
             
         }
+
+        public Player Get(int Id)
+        {
+            return Repository.Get(Id);
+        }
     }
 }

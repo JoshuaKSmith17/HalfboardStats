@@ -9,6 +9,7 @@ namespace HalfboardStats.Infrastructure.Repositories
         HalfboardContext Context { get; set; }
         Task CreateOrUpdateAsync(List<Player> players);
         Task<List<Player>> Get(bool isActive);
+        Player Get(int playerId);
         List<Player> GetAll();
     }
 }

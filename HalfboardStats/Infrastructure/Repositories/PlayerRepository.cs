@@ -33,6 +33,34 @@ namespace HalfboardStats.Infrastructure.Repositories
             await Context.SaveChangesAsync();
         }
 
+        public Player Get(int Id)
+        {
+            var query = Context.Players
+                .Where(p => p.Id == Id)
+                .Join(Context.RegularSeasonStats,
+                p => p.Id,
+                s => s.PlayerId,
+                (p, s) => new
+                {
+                    player = p,
+                    stats = s
+                }).Join(Context.Teams,
+                p => p.player.TeamId,
+                t => t.Id,
+                (p, t) => new
+                {
+                    team = t,
+                    stats = p.stats,
+                    player = p.player
+                });
+
+            Player player = query.First().player;
+            player.CurrentTeam = query.First().team;
+            List<RegularSeasonStats> result = query.Select(s => s.stats).ToList();
+            player.RegularSeasonStats = result;
+            return player;
+        }
+
         public async Task<List<Player>> Get(bool isActive = true)
         {
             IQueryable<Player> playersIQ = from p in Context.Players
