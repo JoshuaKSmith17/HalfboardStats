@@ -68,7 +68,28 @@ namespace HalfboardStats.Infrastructure.Repositories
                              Assists = r.Assists,
                              Points = r.Points,
                              Year = r.Year,
-                             Games = r.Games
+                             Games = r.Games,
+                             Shots = r.Shots,
+                             Hits = r.Hits,
+                             PowerPlayGoals = r.PowerPlayGoals,
+                             PowerPlayPoints = r.PowerPlayPoints,
+                             PowerPlayTimeOnIce = r.PowerPlayTimeOnIce,
+                             EvenStrengthTimeOnIce = r.EvenStrengthTimeOnIce,
+                             PenaltyMinutes = r.PenaltyMinutes,
+                             FaceOffPct = r.FaceOffPct,
+                             ShotPct = r.ShotPct,
+                             GameWinningGoals = r.GameWinningGoals,
+                             OverTimeGoals = r.OverTimeGoals,
+                             ShortHandedGoals = r.ShortHandedGoals,
+                             ShortHandedPoints = r.ShortHandedPoints,
+                             ShortHandedTimeOnIce = r.ShortHandedTimeOnIce,
+                             ShotsBlocked = r.ShotsBlocked,
+                             PlusMinus = r.PlusMinus,
+                             Shifts = r.Shifts,
+                             TimeOnIcePerGame = r.TimeOnIcePerGame,
+                             EvenTimeOnIcePerGame = r.EvenTimeOnIcePerGame,
+                             ShortHandedTimeOnIcePerGame = r.ShortHandedTimeOnIcePerGame,
+                             PowerPlayTimeOnIcePerGame = r.PowerPlayTimeOnIcePerGame
                          };
             
             result = result.OrderByDescending(stat => stat.Goals);
