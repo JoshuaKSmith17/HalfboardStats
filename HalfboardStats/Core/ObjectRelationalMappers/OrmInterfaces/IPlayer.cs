@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace HalfboardStats.Core.ObjectRelationalMappers
+namespace HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces
 {
-    public interface IPlayer
+    public interface IPlayer : IEntity
     {
         string BirthCity { get; set; }
         string BirthCountry { get; set; }
@@ -12,7 +12,6 @@ namespace HalfboardStats.Core.ObjectRelationalMappers
         Team CurrentTeam { get; set; }
         string FirstName { get; set; }
         string Height { get; set; }
-        int Id { get; set; }
         bool IsActive { get; set; }
         bool IsAlternateCaptain { get; set; }
         bool IsCaptain { get; set; }

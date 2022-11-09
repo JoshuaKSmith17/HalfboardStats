@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HalfboardStats.Core.ObjectRelationalMappers
+namespace HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces
 {
     public interface IEntity
     {
