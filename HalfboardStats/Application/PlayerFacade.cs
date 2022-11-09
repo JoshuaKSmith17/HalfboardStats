@@ -1,5 +1,6 @@
 ﻿using HalfboardStats.Core.Controllers;
 using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 using HalfboardStats.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace HalfboardStats.Application
             return players;
         }
 
-        public Player GetPlayer(int Id)
+        public IPlayer GetPlayer(int Id)
         {
             return Controller.Get(Id);
         }

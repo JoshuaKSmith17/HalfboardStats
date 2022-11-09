@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 
 namespace HalfboardStats.Core.ObjectRelationalMappers
 {

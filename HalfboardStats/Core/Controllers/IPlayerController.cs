@@ -1,5 +1,6 @@
 ﻿using HalfboardStats.Core.Builders;
 using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 using HalfboardStats.Infrastructure.Repositories;
 using HalfboardStats.Infrastructure.ServiceAgents;
 using System.Collections.Generic;
@@ -15,6 +16,6 @@ namespace HalfboardStats.Core.Controllers
 
         Task<List<Player>> GetActivePlayers();
         Task CreateActivePlayers();
-        Player Get(int Id);
+        IPlayer Get(int Id);
     }
 }

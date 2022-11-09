@@ -1,32 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HalfboardStats.Core.Factories;
 using HalfboardStats.Core.JsonMappers.PlayerMappers;
 using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 
 namespace HalfboardStats.Core.Builders
 {
     public class PlayerbaseBuilder : IPlayerbaseBuilder
     {
+        private readonly IAbstractFactory<IPlayer> _factory;
 
-        public PlayerbaseBuilder()
+        public PlayerbaseBuilder(IAbstractFactory<IPlayer> factory)
         { 
+            _factory = factory;
         }
-        public List<Player> Build(List<RosterPersonMapper> rosterPersons)
+        public List<IPlayer> Build(List<RosterPersonMapper> rosterPersons)
         {
-            List<Player> players = new List<Player>();
+            List<IPlayer> players = new List<IPlayer>();
 
             foreach (var rosterPerson in rosterPersons)
             {
-                var person = MapPlayer(rosterPerson);
+                IPlayer person = MapPlayer(rosterPerson);
                 players.Add(person);
             }
 
             return players;
         }
 
-        private Player MapPlayer(RosterPersonMapper playerMapper)
+        private IPlayer MapPlayer(RosterPersonMapper playerMapper)
         {
-            var person = new Player();
+            IPlayer person = _factory.Build();
             person.Id = playerMapper.Person.Id;
 
             string[] names = playerMapper.Person.FullName.Split(' ');

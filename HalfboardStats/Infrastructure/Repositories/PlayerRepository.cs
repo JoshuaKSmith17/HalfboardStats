@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HalfboardStats.Infrastructure.Repositories
@@ -15,10 +16,10 @@ namespace HalfboardStats.Infrastructure.Repositories
         {
             Context = context;
         }
-        public async Task CreateOrUpdateAsync(List<Player> players)
+        public async Task CreateOrUpdateAsync(List<IPlayer> players)
         {
             //Add or update a record
-            foreach (var player in players)
+            foreach (Player player in players)
             {
                 var dbPlayer = Context.Players.Find(player.Id);
                 if (dbPlayer == null)
@@ -33,7 +34,7 @@ namespace HalfboardStats.Infrastructure.Repositories
             await Context.SaveChangesAsync();
         }
 
-        public Player Get(int Id)
+        public IPlayer Get(int Id)
         {
             var query = Context.Players
                 .Where(p => p.Id == Id)
@@ -54,7 +55,7 @@ namespace HalfboardStats.Infrastructure.Repositories
                     player = p.player
                 });
 
-            Player player = query.First().player;
+            IPlayer player = query.First().player;
             player.CurrentTeam = query.First().team;
             List<RegularSeasonStats> result = query.Select(s => s.stats).ToList();
             player.RegularSeasonStats = result;
