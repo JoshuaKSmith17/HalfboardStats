@@ -22,6 +22,7 @@ using Quartz;
 using Quartz.Impl;
 using Microsoft.AspNetCore.Mvc;
 using HalfboardStats.Core;
+using HalfboardStats.Core.Factories;
 
 namespace HalfboardStats
 {
@@ -63,6 +64,8 @@ namespace HalfboardStats
             services.AddScoped<ISeasonYear, SeasonYear>();
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
+            services.AddAbstractFactory<IPlayer, Player>();
+
             services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
 
             services.AddQuartz(q =>
@@ -70,13 +73,13 @@ namespace HalfboardStats
                 q.UseMicrosoftDependencyInjectionJobFactory();
                 q.ScheduleJob<PlayerJob>(trigger => trigger
                 .WithIdentity("Main Trigger")
+                //.StartNow()
                 .StartAt(DateBuilder.FutureDate(1, IntervalUnit.Hour))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(12)
                 .RepeatForever()));
             });
 
             services.AddQuartzHostedService();
-
 
             services.AddRazorPages();
             services.AddMvc().AddRazorPagesOptions(opt => {
@@ -106,11 +109,8 @@ namespace HalfboardStats
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
