@@ -141,6 +141,22 @@
                         }
                     </a>
                 </th>
+                <th class="col-sm-1" style="font-size: 20px">
+                    <a asp-page="./Statistics"
+                       class="text-light font-weight-bold"
+                       asp-route-sortby="@(RouteData.Values["sortby"].ToString() != "Hits descending" ? "Hits descending" : "Hits")">
+                        Hits
+
+                        @if (RouteData.Values["sortby"].ToString() == "Hits")
+                        {
+                            @Html.Raw(Model.UpArrow);
+                        }
+                        else if (RouteData.Values["sortby"].ToString() == "Hits descending")
+                        {
+                            @Html.Raw(Model.DownArrow);
+                        }
+                    </a>
+                </th>
             </tr>
         </thead>
         @foreach (var Skater in Model.SkaterStats)
@@ -174,6 +190,9 @@
                 </td>
                 <td class="py-0">
                     @Html.DisplayFor(modelPlayer => Skater.Points)
+                </td>
+                <td class="py-0">
+                    @Html.DisplayFor(modelPlayer => Skater.Hits)
                 </td>
             </tr>
         }
