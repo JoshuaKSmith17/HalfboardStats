@@ -1,6 +1,7 @@
 ﻿using HalfboardStats.Core.Builders;
 using HalfboardStats.Core.JsonMappers.PlayerMappers;
 using HalfboardStats.Core.ObjectRelationalMappers;
+using HalfboardStats.Core.ObjectRelationalMappers.OrmInterfaces;
 using HalfboardStats.Infrastructure.Repositories;
 using HalfboardStats.Infrastructure.ServiceAgents;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace HalfboardStats.Core.Controllers
         public async Task CreateActivePlayers()
         {
             List<RosterPersonMapper> rosterPersons = await Agent.GetActivePlayers();
-            List<Player> players = Builder.Build(rosterPersons);
+            List<IPlayer> players = Builder.Build(rosterPersons);
             await Repository.CreateOrUpdateAsync(players);
         }
 
@@ -40,14 +41,14 @@ namespace HalfboardStats.Core.Controllers
             while(SeasonYear.Year != SeasonYear.FirstYear)
             {
                 List<RosterPersonMapper> rosterPersons = await Agent.GetAllPlayersAsync(SeasonYear.Year);
-                List<Player> players = Builder.Build(rosterPersons);
+                List<IPlayer> players = Builder.Build(rosterPersons);
                 await Repository.CreateOrUpdateAsync(players);
                 SeasonYear.DecrementSeason();
             }
             
         }
 
-        public Player Get(int Id)
+        public IPlayer Get(int Id)
         {
             return Repository.Get(Id);
         }
